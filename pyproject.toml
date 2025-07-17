@@ -1,10 +1,10 @@
 [project]
 name = "mdsasa-bolt"
 description = "This library allows the calculation of a solvent-accessible-surface area of a trajectory"
-license = { file = "LICENSE" }
+license = "GPL-2.0"
 authors = [{ name = "Maxwell Campbell", email = "max@hearthindustries.io" }]
 maintainers = [{ name = "Maxwell Campbell", email = "max@hearthindustries.io" }]
-version = "0.1.0"
+version = "0.1.46"
 readme = "README.md"
 requires-python = ">=3.11"
 dependencies = [
@@ -12,6 +12,40 @@ dependencies = [
     "mdanalysis>=2.9.0",
     "numpy>=2.3.1",
     "pytest>=8.4.1",
-    "rust-sasa-python>=0.2.3",
+    "rust-sasa-python>=0.2.4",
 ]
 keywords = ["molecular simulations", "science", "bioinformatics"]
+
+[tool.setuptools.packages.find]
+include = ["mdsasa_bolt*"]
+exclude = ["bench*", "tests*"]
+
+[dependency-groups]
+dev = ["ruff>=0.11.10"]
+
+[tool.ruff]
+exclude = ['tests/']
+line-length = 120
+
+[tool.ruff.lint]
+select = ["ALL"]
+ignore = [
+    "D401",
+    "EM102",
+    "TRY003",
+    "D417",
+    "PLR2004",
+    "RUF001",
+    "ANN003",
+    "FBT003",
+    "S318",
+    "D100",
+    "FIX002",
+    "TD003",
+    "TD002",
+    "S314",
+    "FBT001",
+    "FBT002",
+    "D104",
+    "S101",
+]

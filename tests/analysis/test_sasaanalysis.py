@@ -1,13 +1,13 @@
 from pathlib import Path
 
-import MDAnalysis as mda
+import MDAnalysis as MDa
 import numpy as np
 import pytest
 from MDAnalysis.core.topologyattrs import Atomnames, Atomtypes, Resids, Resnames, Resnums, Segids
 
-from src.lib import SASAAnalysis
+from mdsasa_bolt.analysis import SASAAnalysis
 
-from ..utils import make_Universe
+from ..utils import make_universe
 
 PARENT = Path(__file__).parent.parent
 
@@ -16,8 +16,9 @@ class TestSASAAnalysis:
     # fixtures are helpful functions that set up a test
     # See more at https://docs.pytest.org/en/stable/how-to/fixtures.html
     @pytest.fixture
-    def universe(self):
-        u = make_Universe(
+    def universe(self) -> MDa.Universe:
+        """Creates dummy universe object with three frames."""
+        u = make_universe(
             n_frames=3,
         )
 
@@ -33,7 +34,8 @@ class TestSASAAnalysis:
         return u
 
     @pytest.fixture
-    def analysis(self, universe):
+    def analysis(self, universe: MDa.Universe) -> SASAAnalysis:
+        """Create analysis class from dummy universe object."""
         return SASAAnalysis(universe)
 
     @pytest.mark.parametrize(
@@ -44,27 +46,29 @@ class TestSASAAnalysis:
             ("segindex 3:4", 50),
         ],
     )
-    def test_atom_selection(self, universe, select, n_atoms):
+    def test_atom_selection(self, universe: MDa.Universe, select, n_atoms) -> None:
+        """Test that we can select atoms for analysis."""
         # `universe` here is the fixture defined above
         analysis = SASAAnalysis(universe, select=select)
         assert analysis.atomgroup.n_atoms == n_atoms
 
-    def test_total_sasa_calculation(self, analysis):
+    def test_total_sasa_calculation(self, analysis: SASAAnalysis) -> None:
+        """Test that analysis pipeline outputs same number of frames in input."""
         analysis.run(stop=3)
         assert analysis.n_frames == 3
 
-    def test_with_atom_group(self, universe):
+    def test_with_atom_group(self, universe: MDa.Universe) -> None:
         analysis = SASAAnalysis(universe.atoms)
         analysis.run()
         assert analysis.n_frames == 3
 
-    def test_total_sasa_calculation_results(self, analysis):
+    def test_total_sasa_calculation_results(self, analysis: SASAAnalysis) -> None:
         analysis.run(stop=3)
         assert analysis.n_frames == 3
         assert analysis.results["total_area"].dtype == np.dtype("float64")
         assert np.all(analysis.results["total_area"] >= 0)
 
-    def test_residue_sasa_calculation_results(self, analysis):
+    def test_residue_sasa_calculation_results(self, analysis: SASAAnalysis) -> None:
         analysis.run(stop=3)
         assert analysis.n_frames == 3
         assert analysis.results["residue_area"].dtype == np.dtype("float64")
@@ -79,7 +83,7 @@ class TestSASAAnalysis:
         ],
     )
     def test(self, filename, res_numbers):
-        u = mda.Universe(PARENT / "data" / filename)
+        u = MDa.Universe(PARENT / "data" / filename)
         analysis = SASAAnalysis(u)
         analysis.run()
         assert len(analysis.results.residue_area[0]) == res_numbers

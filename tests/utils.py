@@ -1,17 +1,15 @@
-from typing import Tuple
-
-import MDAnalysis as mda
-from MDAnalysis.coordinates.memory import MemoryReader
+import MDAnalysis as MDa
 import numpy as np
+from MDAnalysis.coordinates.memory import MemoryReader
 
 
-def make_Universe(
-    size: Tuple[int, int, int] = (125, 25, 5),
+def make_universe(
+    size: tuple[int, int, int] = (125, 25, 5),
     n_frames: int = 0,
     velocities: bool = False,
-    forces: bool = False
-) -> mda.Universe:
-    """Make a dummy reference Universe
+    forces: bool = False,
+) -> MDa.Universe:
+    """Make a dummy reference Universe.
 
     Allows the construction of arbitrary-sized Universes. Suitable for
     the generation of structures for output.
@@ -36,24 +34,21 @@ def make_Universe(
     MDAnalysis.core.universe.Universe object
 
     """
-
     n_atoms, n_residues, n_segments = size
     trajectory = n_frames > 0
-    u = mda.Universe.empty(
+    u = MDa.Universe.empty(
         # topology things
         n_atoms=n_atoms,
         n_residues=n_residues,
         n_segments=n_segments,
-        atom_resindex=np.repeat(
-            np.arange(n_residues), n_atoms // n_residues),
-        residue_segindex=np.repeat(
-            np.arange(n_segments), n_residues // n_segments),
+        atom_resindex=np.repeat(np.arange(n_residues), n_atoms // n_residues),
+        residue_segindex=np.repeat(np.arange(n_segments), n_residues // n_segments),
         # trajectory things
         trajectory=trajectory,
         velocities=velocities,
         forces=forces,
     )
-  
+
     if trajectory:
         pos = np.arange(3 * n_atoms * n_frames).reshape(n_frames, n_atoms, 3)
         vel = pos + 100 if velocities else None
