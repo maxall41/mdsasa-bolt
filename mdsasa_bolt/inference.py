@@ -28,7 +28,6 @@ def get_atom_element(atom):
         try:
             element = method(atom)
             if element:
-                print("el", element)
                 return element
         except:
             pass

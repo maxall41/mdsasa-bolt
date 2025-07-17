@@ -1,5 +1,7 @@
 # Copyright (C) 2025 Maxwell J. Campbell
+import hashlib
 import logging
+import pickle
 from collections.abc import Callable
 from typing import TYPE_CHECKING, Union
 
@@ -145,14 +147,25 @@ class SASAAnalysis(AnalysisBase):
                 self.atomgroup,
                 strict=False,
             )
-            if get_atom_element(atom) != "H"  # Skip hydrogen atoms
+            if get_atom_element(atom) != "H"
         ]
+
+        # Calculate and print md5 hash of input_atoms
+        md5_hash = hashlib.md5(pickle.dumps(input_atoms)).hexdigest()
+        print(
+            f"MD5 hash of input_atoms: {md5_hash}",
+        )  # MATCH!!! (0351e1fe72a5d39aed5dde0e8d7c3992, d179a1ce1682e00b157b2aab3318b9ea, e3e9c1a743eaedc31db3d33d7330e8bc) -> (0351e1fe72a5d39aed5dde0e8d7c3992,d179a1ce1682e00b157b2aab3318b9ea,e3e9c1a743eaedc31db3d33d7330e8bc)
         # 11,671 -> 6,629
 
         residue_sasa_values: list[Residue] = calculate_sasa_internal_at_residue_level(input_atoms, 1.4, 100)
 
+        md5_hash = hashlib.md5(pickle.dumps([r.sasa for r in residue_sasa_values])).hexdigest()
+        print(
+            f"MD5 hash of residue_sasa_values: {md5_hash}",
+        )  # NO MATCH!!! (a3679e0ce19bd353899880974f2a5a43,be3945355682df955a1b234703c256e9,56fc2dff0dce7b4ed9d6794a5361a60b) -> (ca076f949041bb20495f8866e6a105e7,6a7d17d19c414e012d9f3a2d759fff50,723cd476889f52058cafc34d1de0b3e0)
+
         for sasa in residue_sasa_values:
-            logger.info(f"Residue {sasa.residue_number} has SASA {sasa.sasa}")
+            logger.info(f"Residue {sasa.residue_number} {sasa.residue_name} has SASA {sasa.sasa}")
 
         self.results.total_area[self._frame_index] = sum([v.sasa for v in residue_sasa_values])
 
