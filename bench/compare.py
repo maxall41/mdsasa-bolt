@@ -30,9 +30,9 @@ def main() -> None:
     xlim = plt.xlim()
     ylim = plt.ylim()
 
-    # Add perfect correlation line within the visible range
-    line_min = max(xlim[0], ylim[0])
-    line_max = min(xlim[1], ylim[1])
+    # Add perfect correlation line spanning the full diagonal
+    line_min = min(xlim[0], ylim[0])
+    line_max = max(xlim[1], ylim[1])
     plt.plot([line_min, line_max], [line_min, line_max], "r--", alpha=0.8, label="Perfect correlation")
 
     # Add labels and title
