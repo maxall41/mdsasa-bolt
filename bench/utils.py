@@ -6,7 +6,7 @@ from Bio.PDB import PDBIO, Atom, Chain, Model, Residue, Structure
 from Bio.PDB.Atom import PDBConstructionWarning
 
 
-def save(analysis, filename):
+def save(analysis, filename) -> None:
     """Save analysis results by dumping frames as PDB with SASA in B-factor column."""
     with open("bench/" + filename, "w") as f:
         f.writelines(f"{frame}\n" for frame in analysis.results.total_area)
@@ -94,4 +94,3 @@ def save(analysis, filename):
         io.set_structure(structure)
         io.save(str(output_file))
 
-    print(f"Dumped {analysis.n_frames} PDB files with SASA in B-factor column to {output_dir}")

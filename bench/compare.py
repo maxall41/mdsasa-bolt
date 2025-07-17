@@ -13,7 +13,7 @@ def load_results(filename):
     return np.array(results)
 
 
-def main():
+def main() -> None:
     # Load results from both implementations
     old_results = load_results("old_sasa_results.txt")
     new_results = load_results("new_sasa_results.txt")
@@ -54,7 +54,7 @@ def main():
         stats_text,
         transform=plt.gca().transAxes,
         verticalalignment="top",
-        bbox=dict(boxstyle="round", facecolor="wheat", alpha=0.8),
+        bbox={"boxstyle": "round", "facecolor": "wheat", "alpha": 0.8},
     )
 
     plt.tight_layout()
@@ -62,12 +62,6 @@ def main():
     plt.show()
 
     # Print summary statistics
-    print("Correlation analysis:")
-    print(f"Pearson correlation coefficient: {correlation:.6f}")
-    print(f"P-value: {p_value:.2e}")
-    print(f"Mean difference (new - old): {mean_diff:.3f} Ų")
-    print(f"Root Mean Square Error: {rmse:.3f} Ų")
-    print(f"Number of data points: {len(old_results)}")
 
 
 if __name__ == "__main__":
