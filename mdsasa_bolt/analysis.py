@@ -87,14 +87,17 @@ class SASAAnalysis(AnalysisBase):
         logger.info("Testing radius calculation methods for first %d atoms", x)
 
         for method in get_all_radii_methods(self._classifier):
+            worked = 0
             for test_atom in test_atoms:
                 try:
                     radius = method(test_atom)
                     if radius is None or radius <= 0:
                         raise NoDataError("Invalid radius")
-                    return method
+                    worked += 1
                 except NoDataError:
                     pass
+            if worked == x:
+                return method
 
         error_msg = "No radius calculation method worked for this system"
         raise ValueError(error_msg)

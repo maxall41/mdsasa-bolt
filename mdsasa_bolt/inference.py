@@ -5,6 +5,7 @@ def get_all_radii_methods(classifier):
     methods = [
         lambda atom: vdwradii.get(atom.type),
         lambda atom: vdwradii.get(atom.name[0]),
+        lambda atom: vdwradii.get(atom.type[0]),
         lambda atom: classifier.radius(atom.resname, atom.name),
         lambda atom: classifier.radius("ANY", atom.type),
     ]

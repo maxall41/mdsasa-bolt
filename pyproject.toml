@@ -4,16 +4,16 @@ description = "This library allows the calculation of a solvent-accessible-surfa
 license = "GPL-2.0"
 authors = [{ name = "Maxwell Campbell", email = "max@hearthindustries.io" }]
 maintainers = [{ name = "Maxwell Campbell", email = "max@hearthindustries.io" }]
-version = "0.1.83"
+version = "0.1.87"
 readme = "README.md"
 requires-python = ">=3.11"
 dependencies = [
     "biopython>=1.85",
     "freesasa>=2.2.1",
     "mdanalysis>=2.9.0",
-    "mdanalysistests>=2.9.0",
     "numpy>=2.3.1",
     "pytest>=8.4.1",
+    "rust-sasa-python>=0.2.5",
 ]
 keywords = ["molecular simulations", "science", "bioinformatics"]
 

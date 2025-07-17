@@ -5,9 +5,10 @@ import sys
 import MDAnalysis as mda
 import numpy as np
 from MDAnalysis.tests.datafiles import PDB_xvf, TRR_xvf
-from utils import save
 
 from mdsasa_bolt.analysis import SASAAnalysis
+
+from .utils import save
 
 # Configure logging to show INFO level messages
 logging.basicConfig(level=logging.INFO, format="%(name)s - %(levelname)s - %(message)s")

@@ -4,7 +4,7 @@ import MDAnalysis as MDa
 import numpy as np
 import pytest
 from MDAnalysis.core.topologyattrs import Atomnames, Atomtypes, Resids, Resnames, Resnums, Segids
-
+import math
 from mdsasa_bolt.analysis import SASAAnalysis
 
 from ..utils import make_universe
@@ -75,16 +75,16 @@ class TestSASAAnalysis:
         assert np.all(analysis.results["residue_area"] >= 0)
         assert analysis.results["residue_area"].shape == (3, 25)
 
-    @pytest.mark.parametrize(
-        "filename, res_numbers",
-        [
-            ("134L.pdb", 201),
-            ("image_vf.data", 1),
-        ],
-    )
-    def test(self, filename, res_numbers):
-        u = MDa.Universe(PARENT / "data" / filename)
-        analysis = SASAAnalysis(u)
+    def test_calculation(self):
+        u = MDa.Universe(PARENT / 'data' / 'cobrotoxin.pdb', PARENT / 'data' / 'cobrotoxin.trr')
+
+        selected_atoms = u.select_atoms("not (resname SOL or resname CL or resname NA)")
+        filtered_residues = [r for r in u.residues if r.resname not in {"SOL", "CL", "NA"}]
+        u.residues = u.residues[np.array([r.ix for r in filtered_residues])]
+
+        analysis = SASAAnalysis(selected_atoms)
         analysis.run()
-        assert len(analysis.results.residue_area[0]) == res_numbers
         assert np.all(analysis.results["residue_area"] >= 0)
+        assert math.isclose(analysis.results["total_area"][0],4580.830870509148,abs_tol=20)
+        assert math.isclose(analysis.results["total_area"][1],4811.4414303302765,abs_tol=20)
+        assert math.isclose(analysis.results["total_area"][2],4685.583839893341,abs_tol=20)

@@ -5,7 +5,8 @@ import MDAnalysis as mda
 import numpy as np
 from mdakit_sasa.analysis.sasaanalysis import SASAAnalysis
 from MDAnalysis.tests.datafiles import PDB_xvf, TRR_xvf
-from utils import save
+
+from .utils import save
 
 u = mda.Universe(PDB_xvf, TRR_xvf)
 
