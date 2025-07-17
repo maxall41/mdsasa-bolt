@@ -91,6 +91,7 @@ MDSASA-Bolt has been thoroughly validated against reference implementations to e
 
 ![Comparing SASA results](bench/sasa_comparison.png)
 
+
 The validation shows excellent agreement between MDSASA-Bolt and reference methods, confirming that the performance improvements don't compromise accuracy.
 
 ## API Reference
