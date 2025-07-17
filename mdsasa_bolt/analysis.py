@@ -111,9 +111,9 @@ class SASAAnalysis(AnalysisBase):
         try:
             return method(atom)
         except NoDataError:
-            for method in get_all_radii_methods(self._classifier):
+            for fallback_method in get_all_radii_methods(self._classifier):
                 try:
-                    radius = method(atom)
+                    radius = fallback_method(atom)
                     if radius is not None and radius > 0:
                         return radius
                 except (NoDataError, Exception):
@@ -165,7 +165,7 @@ class SASAAnalysis(AnalysisBase):
         # Defend against residue counts mismatch
         if len(self.universe.residues.resids) != len(residue_sasa_values):
             logger.error(
-                f"Residue count does not match the expectation {len(self.universe.residues.resids)} {len(residue_sasa_values)}",
+                "Residue count does not match the expectation",
             )
         else:
             self.results.residue_area[self._frame_index] = [r.sasa for r in residue_sasa_values]
