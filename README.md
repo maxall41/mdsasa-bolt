@@ -14,7 +14,7 @@ MDSASA-Bolt is a **high-performance Python library** for computing solvent acces
 - 🔄 **Drop-in Replacement**: Compatible with existing mdakit-sasa workflows.
 - 🧬 **MDAnalysis Integration**: Seamlessly works with MDAnalysis Universe and AtomGroup objects.
 - 🦀 **Powered by [RustSASA](https://github.com/maxall41/RustSASA)**: Leverages Rust's performance and safety.
-- 🧪 **Validated**: Tested against reference implementations
+- 🧪 **Validated**: Tested against Freesasa/mdakit_sasa.
 - 📊 **Trajectory Analysis**: Built for analyzing entire MD trajectories efficiently
 - 🐍 **Pure Python API**: Familiar interface for Python developers
 

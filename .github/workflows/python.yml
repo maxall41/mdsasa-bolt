@@ -86,7 +86,7 @@ jobs:
           uv tool install twine
 
       - name: Build package
-        run: uv tool run build
+        run: uv tool run --from build pyproject-build
 
       - name: Publish to PyPI
         env:
