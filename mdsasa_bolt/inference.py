@@ -1,7 +1,20 @@
+from collections.abc import Callable
+
+from freesasa.classifier import Classifier
+from MDAnalysis.core.groups import Atom
 from MDAnalysis.guesser.tables import vdwradii
 
 
-def get_all_radii_methods(classifier):
+def get_all_radii_methods(classifier: Classifier) -> list[Callable]:
+    """Returns a list of methods to determine the radius of an atom.
+
+    Args:
+        classifier: The classifier to use for determining the radius.
+
+    Returns:
+        A list of methods to determine the radius of an atom.
+
+    """
     return [
         lambda atom: vdwradii.get(atom.type),
         lambda atom: vdwradii.get(atom.name[0]),
@@ -11,8 +24,13 @@ def get_all_radii_methods(classifier):
     ]
 
 
+def get_all_element_methods() -> list[Callable]:
+    """Returns a list of methods to determine the element of an atom.
 
-def get_all_element_methods():
+    Returns:
+        A list of methods to determine the element of an atom.
+
+    """
     return [
         lambda atom: atom.element,
         lambda atom: atom.type[0],
@@ -20,8 +38,19 @@ def get_all_element_methods():
     ]
 
 
+def get_atom_element(atom: Atom) -> str:
+    """Attempts to determine the element of an atom.
 
-def get_atom_element(atom):
+    Args:
+        atom: The atom to determine the element of.
+
+    Returns:
+        The element of the atom.
+
+    Raises:
+        ValueError: If the element could not be determined.
+
+    """
     el_methods = get_all_element_methods()
     for method in el_methods:
         try:

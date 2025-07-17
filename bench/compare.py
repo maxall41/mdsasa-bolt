@@ -1,19 +1,20 @@
 # Copyright (C) 2025 Maxwell J. Campbell
+from pathlib import Path
+
 import matplotlib.pyplot as plt
 import numpy as np
 from scipy.stats import pearsonr
 
 
-def load_results(filename):
+def load_results(filename: str) -> np.ndarray:
     """Load SASA results from a text file."""
-    results = []
-    with open(f"bench/{filename}") as f:
-        for line in f:
-            results.append(float(line.strip()))
+    with Path.open(Path("bench") / Path(filename)) as f:
+        results = [float(line.strip()) for line in f]
     return np.array(results)
 
 
 def main() -> None:
+    """Compare SASA results from old and new implementations."""
     # Load results from both implementations
     old_results = load_results("old_sasa_results.txt")
     new_results = load_results("new_sasa_results.txt")

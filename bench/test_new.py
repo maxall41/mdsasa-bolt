@@ -2,7 +2,7 @@
 import logging
 import sys
 
-import MDAnalysis as mda
+import MDAnalysis as MDa
 import numpy as np
 from MDAnalysis.tests.datafiles import PDB_xvf, TRR_xvf
 
@@ -13,7 +13,7 @@ from .utils import save
 # Configure logging to show INFO level messages
 logging.basicConfig(level=logging.INFO, format="%(name)s - %(levelname)s - %(message)s")
 
-u = mda.Universe(PDB_xvf, TRR_xvf)
+u = MDa.Universe(PDB_xvf, TRR_xvf)
 
 selected_atoms = u.select_atoms("not (resname SOL or resname CL or resname NA)")
 filtered_residues = [r for r in u.residues if r.resname not in {"SOL", "CL", "NA"}]

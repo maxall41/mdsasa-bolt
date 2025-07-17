@@ -1,7 +1,5 @@
 # Copyright (C) 2025 Maxwell J. Campbell
-import hashlib
 import logging
-import pickle
 from collections.abc import Callable
 from typing import TYPE_CHECKING, Union
 
@@ -9,6 +7,7 @@ import freesasa
 import numpy as np
 from MDAnalysis import NoDataError
 from MDAnalysis.analysis.base import AnalysisBase
+from MDAnalysis.core.groups import Atom
 from rust_sasa_python import Residue, calculate_sasa_internal_at_residue_level
 
 from .inference import get_all_radii_methods, get_atom_element
@@ -83,7 +82,7 @@ class SASAAnalysis(AnalysisBase):
         """Determine the best radius calculation method for this system."""
         # Try each method with the first 3 atoms to see which one works
         x = 3
-        test_atoms = self.atomgroup[:x]
+        test_atoms: AtomGroup = self.atomgroup[:x]
         logger.info("Testing radius calculation methods for first %d atoms", x)
 
         for method in get_all_radii_methods(self._classifier):
@@ -93,7 +92,7 @@ class SASAAnalysis(AnalysisBase):
                     radius = method(test_atom)
                     if radius is None or radius <= 0:
                         msg = "Invalid radius"
-                        raise NoDataError(msg)
+                        raise NoDataError(msg)  # noqa: TRY301
                     worked += 1
                 except NoDataError:
                     pass
@@ -103,7 +102,7 @@ class SASAAnalysis(AnalysisBase):
         error_msg = "No radius calculation method worked for this system"
         raise ValueError(error_msg)
 
-    def _get_radius_with_fallback(self, atom) -> float:
+    def _get_radius_with_fallback(self, atom: Atom) -> float:
         """Get radius for an atom with fallback methods if primary method fails."""
         for method in get_all_radii_methods(self._classifier):
             try:
@@ -154,16 +153,10 @@ class SASAAnalysis(AnalysisBase):
             if get_atom_element(atom) != "H"
         ]
 
-        # Calculate and print md5 hash of input_atoms
-        hashlib.md5(pickle.dumps(input_atoms)).hexdigest()
-        # 11,671 -> 6,629
-
         residue_sasa_values: list[Residue] = calculate_sasa_internal_at_residue_level(input_atoms, 1.4, 100)
 
-        hashlib.md5(pickle.dumps([r.sasa for r in residue_sasa_values])).hexdigest()
-
         for sasa in residue_sasa_values:
-            logger.info(f"Residue {sasa.residue_number} {sasa.residue_name} has SASA {sasa.sasa}")
+            logger.info(f"Residue {sasa.residue_number}, {sasa.residue_name} has SASA {sasa.sasa}")
 
         self.results.total_area[self._frame_index] = sum([v.sasa for v in residue_sasa_values])
 

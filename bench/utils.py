@@ -4,11 +4,13 @@ from pathlib import Path
 import numpy as np
 from Bio.PDB import PDBIO, Atom, Chain, Model, Residue, Structure
 from Bio.PDB.Atom import PDBConstructionWarning
+from mdakit_sasa.analysis.sasaanalysis import SASAAnalysis
+from mdsabolt.analysis.sasaanalysisbolt import SASAAnalysis as SASAAnalysisBolt
 
 
-def save(analysis, filename) -> None:
+def save(analysis: SASAAnalysis | SASAAnalysisBolt, filename: str) -> None:
     """Save analysis results by dumping frames as PDB with SASA in B-factor column."""
-    with open("bench/" + filename, "w") as f:
+    with Path.open("bench/" / Path(filename), "w") as f:
         f.writelines(f"{frame}\n" for frame in analysis.results.total_area)
     # Create output directory
     output_dir = Path("sasa_frames")
@@ -36,8 +38,6 @@ def save(analysis, filename) -> None:
             res_idx = atom.resindex
             if res_idx < len(residue_sasa):
                 atom_sasa[i] = residue_sasa[res_idx]
-
-        # print("atom_sasa", atom_sasa)
 
         # Create Biopython structure
         structure = Structure.Structure("SASA_STRUCTURE")
@@ -85,12 +85,8 @@ def save(analysis, filename) -> None:
             )
             current_residue.add(bio_atom)
 
-        # for atom in structure.get_atoms():
-        #     print("AS", atom.bfactor)
-
         # Write PDB file
         output_file = output_dir / f"frame_{frame_idx:04d}_sasa.pdb"
         io = PDBIO()
         io.set_structure(structure)
         io.save(str(output_file))
-
