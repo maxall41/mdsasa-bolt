@@ -4,13 +4,14 @@ from collections.abc import Callable
 from typing import TYPE_CHECKING, Union
 
 import freesasa
+import line_profiler
 import numpy as np
 from MDAnalysis import NoDataError
 from MDAnalysis.analysis.base import AnalysisBase
 from MDAnalysis.core.groups import Atom
 from rust_sasa_python import Residue, calculate_sasa_internal_at_residue_level
 
-from .inference import get_all_radii_methods, get_atom_element
+from .inference import get_all_radii_methods
 
 if TYPE_CHECKING:
     from MDAnalysis.core.universe import AtomGroup, Universe
@@ -59,6 +60,9 @@ class SASAAnalysis(AnalysisBase):
 
     """
 
+    _analysis_algorithm_is_parallelizable = True
+
+    @line_profiler.profile
     def __init__(
         self,
         universe_or_atomgroup: Union["Universe", "AtomGroup"],
@@ -75,7 +79,7 @@ class SASAAnalysis(AnalysisBase):
         self._radius_method = self._determine_radius_method()
 
         # Pre-compute radii for all atoms using the determined method
-        self._atom_radii = self._calculate_atom_radii()
+        self._atom_radii = self._calculate_atom_radii(self._radius_method)
         self._atom_resnums = np.array([atom.resnum.item() for atom in self.atomgroup])
 
     def _determine_radius_method(self) -> Callable:
@@ -102,26 +106,28 @@ class SASAAnalysis(AnalysisBase):
         error_msg = "No radius calculation method worked for this system"
         raise ValueError(error_msg)
 
-    def _get_radius_with_fallback(self, atom: Atom) -> float:
+    def _get_radius_with_fallback(self, atom: Atom, method: Callable) -> float:
         """Get radius for an atom with fallback methods if primary method fails."""
-        for method in get_all_radii_methods(self._classifier):
-            try:
-                radius = method(atom)
-                logger.info(f"Using fallback radius method for atom {atom.name} in residue {atom.resname} = {radius}")
-                if radius is not None and radius > 0:
-                    return radius
-            except (NoDataError, Exception):
-                pass
+        try:
+            return method(atom)
+        except NoDataError:
+            for method in get_all_radii_methods(self._classifier):
+                try:
+                    radius = method(atom)
+                    if radius is not None and radius > 0:
+                        return radius
+                except (NoDataError, Exception):
+                    pass
 
         error_msg = "No radius calculation method worked for this system"
         raise ValueError(error_msg)
 
-    def _calculate_atom_radii(self) -> np.ndarray:
+    def _calculate_atom_radii(self, method: Callable) -> np.ndarray:
         """Calculate radii for all atoms using the determined method."""
         radii = np.zeros(len(self.atomgroup), dtype=float)
 
         for i, atom in enumerate(self.atomgroup):
-            radii[i] = self._get_radius_with_fallback(atom)
+            radii[i] = self._get_radius_with_fallback(atom, method)
 
         logger.info(f"Pre-computed radii for {len(radii)} atoms")
         return radii
@@ -136,6 +142,7 @@ class SASAAnalysis(AnalysisBase):
             dtype=float,
         )
 
+    @line_profiler.profile
     def _single_frame(self) -> None:
         """Calculate data from a single frame of trajectory."""
         # Get current positions and construct input_atoms efficiently
@@ -143,27 +150,22 @@ class SASAAnalysis(AnalysisBase):
 
         input_atoms = [
             (tuple(position), radius, resnum)
-            for position, radius, resnum, atom in zip(
+            for position, radius, resnum in zip(
                 positions,
                 self._atom_radii,
                 self._atom_resnums,
-                self.atomgroup,
                 strict=False,
             )
-            if get_atom_element(atom) != "H"
         ]
 
         residue_sasa_values: list[Residue] = calculate_sasa_internal_at_residue_level(input_atoms, 1.4, 100)
-
-        for sasa in residue_sasa_values:
-            logger.info(f"Residue {sasa.residue_number}, {sasa.residue_name} has SASA {sasa.sasa}")
 
         self.results.total_area[self._frame_index] = sum([v.sasa for v in residue_sasa_values])
 
         # Defend against residue counts mismatch
         if len(self.universe.residues.resids) != len(residue_sasa_values):
             logger.error(
-                "Residue count does not match the expectation",
+                f"Residue count does not match the expectation {len(self.universe.residues.resids)} {len(residue_sasa_values)}",
             )
         else:
             self.results.residue_area[self._frame_index] = [r.sasa for r in residue_sasa_values]

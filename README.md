@@ -10,7 +10,7 @@ MDSASA-Bolt is a **high-performance Python library** for computing solvent acces
 
 # Features
 
-- ⚡️ **Ludicrous Speed**: ~4.8x faster than mdakit-sasa.
+- ⚡️ **Ludicrous Speed**: **11x faster** than mdakit-sasa.
 - 🔄 **Drop-in Replacement**: Compatible with existing mdakit-sasa workflows.
 - 🧬 **MDAnalysis Integration**: Seamlessly works with MDAnalysis Universe and AtomGroup objects.
 - 🦀 **Powered by [RustSASA](https://github.com/maxall41/RustSASA)**: Leverages Rust's performance and safety.
@@ -76,12 +76,12 @@ mean_total_sasa = sasa_analysis.results.mean_total_area
 
 # Performance Benchmarks 🚀
 
-Benchmarks were performed using Hyperfine with DCD and PSF test trajectory files from MDAnalysisTests:
+Benchmarks were performed using molecular dynamics data for [4IAQ from the GPCRMD database](https://www.gpcrmd.org/view/85/). Hypefine (w/ runs =3) was used to measure the time taken. Results:
 
 | Method | Time | Speedup |
 |--------|------|---------|
-| **mdsasa-bolt** | **1.156 s ± 0.014 s** | **4.8x faster** |
-| mdakit-sasa | 5.501 s ± 0.060 s | baseline |
+| **mdsasa-bolt** | **40.396 s ±  2.630 s** | **11x faster** |
+| mdakit-sasa | 450.930 s ±  1.215 s  | baseline |
 
 *Test system: MDAnalysisTests trajectory data*
 
@@ -92,7 +92,7 @@ MDSASA-Bolt has been thoroughly validated against reference implementations to e
 ![Comparing SASA results](https://github.com/maxall41/mdsasa-bolt/blob/main/bench/sasa_comparison.png)
 
 
-MDSASA-Bolt acheives a pearson correlation of 0.947 and an RMSE of 167.95 when compared against mdakit_sasa.
+MDSASA-Bolt acheives a pearson correlation > 0.99 and an RMSE of 209.14 when compared against mdakit_sasa.
 
 # API Reference
 
@@ -133,3 +133,7 @@ This project is licensed under the GNU General Public License v2.0 - see the [LI
 - Built on top of [RustSASA](https://github.com/maxall41/RustSASA) library
 - Integrates seamlessly with [MDAnalysis](https://www.mdanalysis.org/)
 - Inspired by the [mdakit-sasa](https://github.com/MDAnalysis/mdakit-sasa) project
+
+# Roadmap
+
+- [ ] Ovveride `run` method to pass all frame data into rust at start and then perform iteration and parallelization in rust. Should signifgantly improve performance.

@@ -5,7 +5,8 @@ import numpy as np
 from Bio.PDB import PDBIO, Atom, Chain, Model, Residue, Structure
 from Bio.PDB.Atom import PDBConstructionWarning
 from mdakit_sasa.analysis.sasaanalysis import SASAAnalysis
-from mdsabolt.analysis.sasaanalysisbolt import SASAAnalysis as SASAAnalysisBolt
+
+from mdsasa_bolt.analysis import SASAAnalysis as SASAAnalysisBolt
 
 
 def save(analysis: SASAAnalysis | SASAAnalysisBolt, filename: str) -> None:
