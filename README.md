@@ -89,7 +89,7 @@ Benchmarks were performed using Hyperfine with DCD and PSF test trajectory files
 
 MDSASA-Bolt has been thoroughly validated against reference implementations to ensure accuracy:
 
-![Comparing SASA results](bench/sasa_comparison.png)
+![Comparing SASA results](https://github.com/maxall41/mdsasa-bolt/blob/main/bench/sasa_comparison.png)
 
 
 The validation shows excellent agreement between MDSASA-Bolt and reference methods, confirming that the performance improvements don't compromise accuracy.
