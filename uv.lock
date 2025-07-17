@@ -2,6 +2,15 @@ version = 1
 requires-python = ">=3.11"
 
 [[package]]
+name = "attrs"
+version = "25.3.0"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/5a/b0/1367933a8532ee6ff8d63537de4f1177af4bff9f3e829baf7331f595bb24/attrs-25.3.0.tar.gz", hash = "sha256:75d7cefc7fb576747b2c81b4442d4d4a1ce0900973527c011d1030fd3bf4af1b", size = 812032 }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/77/06/bb80f5f86020c4551da315d78b3ab75e8228f89f0162f2c3a819e407941a/attrs-25.3.0-py3-none-any.whl", hash = "sha256:427318ce031701fea540783410126f03899a97ffc6f61596ad581ac2e40e3bc3", size = 63815 },
+]
+
+[[package]]
 name = "biopython"
 version = "1.85"
 source = { registry = "https://pypi.org/simple" }
@@ -166,6 +175,19 @@ dependencies = [
 sdist = { url = "https://files.pythonhosted.org/packages/da/8b/e273fb4b3bb3d6c31b6387b34c602d96c407f535f2c58b17512f8b5a2746/GridDataFormats-1.0.2.tar.gz", hash = "sha256:b93cf7f36fce33dbc428026f26dba560d5c7ba2387caca495bad920f90094502", size = 2158614 }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/89/ab/9cae972ca177f7c64017f4b76f3780c832da52737b95c3e39ed0701af7a7/GridDataFormats-1.0.2-py3-none-any.whl", hash = "sha256:4562bb2da9a064a8e6640e5fb853e204c8f32f6403651703f6b0ef58a009054c", size = 2140075 },
+]
+
+[[package]]
+name = "hypothesis"
+version = "6.135.32"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "attrs" },
+    { name = "sortedcontainers" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/fa/1a/5b0a64bcbbf642ecc4697d89b762ed62481a7dd36e5f5cbf93f29043b1e9/hypothesis-6.135.32.tar.gz", hash = "sha256:b74019dc58065d806abea6292008a392bc9326b88d6a46c8cce51c9cd485af42", size = 456414 }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/0a/06/e430a4134be021e1965473804409584ddf9b6a42906d360b9c75d3c35c79/hypothesis-6.135.32-py3-none-any.whl", hash = "sha256:d0f2bf93863f19a7af2510685dde2b89efb94eaebd3ca0b86c548cd8daa33ab0", size = 523424 },
 ]
 
 [[package]]
@@ -338,6 +360,17 @@ wheels = [
 ]
 
 [[package]]
+name = "mdanalysistests"
+version = "2.9.0"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "hypothesis" },
+    { name = "mdanalysis" },
+    { name = "pytest" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/3d/09/83a486b6686e8d5a230586d8b419a17f2e65ad981305e90cf2093690bf24/mdanalysistests-2.9.0.tar.gz", hash = "sha256:8e4942ec3aaef5e93aeb39690293764ab9995550135ff1bd0df2f40cb95c0626", size = 57488757 }
+
+[[package]]
 name = "mdsasa-bolt"
 version = "0.1.87"
 source = { virtual = "." }
@@ -352,6 +385,8 @@ dependencies = [
 
 [package.dev-dependencies]
 dev = [
+    { name = "mdanalysistests" },
+    { name = "pytest" },
     { name = "ruff" },
 ]
 
@@ -366,7 +401,11 @@ requires-dist = [
 ]
 
 [package.metadata.requires-dev]
-dev = [{ name = "ruff", specifier = ">=0.11.10" }]
+dev = [
+    { name = "mdanalysistests" },
+    { name = "pytest" },
+    { name = "ruff" },
+]
 
 [[package]]
 name = "mmtf-python"
@@ -745,6 +784,15 @@ source = { registry = "https://pypi.org/simple" }
 sdist = { url = "https://files.pythonhosted.org/packages/94/e7/b2c673351809dca68a0e064b6af791aa332cf192da575fd474ed7d6f16a2/six-1.17.0.tar.gz", hash = "sha256:ff70335d468e7eb6ec65b95b99d3a2836546063f63acc5171de367e834932a81", size = 34031 }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/b7/ce/149a00dd41f10bc29e5921b496af8b574d8413afcd5e30dfa0ed46c2cc5e/six-1.17.0-py2.py3-none-any.whl", hash = "sha256:4721f391ed90541fddacab5acf947aa0d3dc7d27b2e1e8eda2be8970586c3274", size = 11050 },
+]
+
+[[package]]
+name = "sortedcontainers"
+version = "2.4.0"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/e8/c4/ba2f8066cceb6f23394729afe52f3bf7adec04bf9ed2c820b39e19299111/sortedcontainers-2.4.0.tar.gz", hash = "sha256:25caa5a06cc30b6b83d11423433f65d1f9d76c4c6a0c90e3379eaa43b9bfdb88", size = 30594 }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/32/46/9cb0e58b2deb7f82b84065f37f3bffeb12413f947f9388e4cac22c4621ce/sortedcontainers-2.4.0-py2.py3-none-any.whl", hash = "sha256:a163dcaede0f1c021485e957a39245190e74249897e2ae4b2aa38595db237ee0", size = 29575 },
 ]
 
 [[package]]

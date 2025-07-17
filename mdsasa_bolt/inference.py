@@ -1,6 +1,7 @@
+# Copyright (C) 2025 Maxwell J. Campbell
 from collections.abc import Callable
 
-from freesasa.classifier import Classifier
+from freesasa import Classifier
 from MDAnalysis.core.groups import Atom
 from MDAnalysis.guesser.tables import vdwradii
 

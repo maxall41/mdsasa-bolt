@@ -22,7 +22,7 @@ include = ["mdsasa_bolt*"]
 exclude = ["bench*", "tests*"]
 
 [dependency-groups]
-dev = ["ruff", "pytest"]
+dev = ["ruff", "pytest", "MDAnalysisTests"]
 
 
 [tool.ruff]
@@ -54,3 +54,10 @@ ignore = [
     "E722",
     "G004",
 ]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py"]
+python_classes = ["Test*"]
+python_functions = ["test_*"]
+addopts = "-v --tb=short"
