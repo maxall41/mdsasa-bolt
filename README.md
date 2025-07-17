@@ -8,7 +8,7 @@
 
 MDSASA-Bolt is a **high-performance Python library** for computing solvent accessible surface area (SASA) of molecular dynamics trajectories. It's a drop-in replacement for mdakit-sasa that leverages RustSASA under the hood to deliver dramatically improved performance while maintaining full compatibility with MDAnalysis workflows.
 
-## Features ✨
+# Features
 
 - ⚡️ **Ludicrous Speed**: ~4.8x faster than mdakit-sasa.
 - 🔄 **Drop-in Replacement**: Compatible with existing mdakit-sasa workflows.
@@ -18,15 +18,15 @@ MDSASA-Bolt is a **high-performance Python library** for computing solvent acces
 - 📊 **Trajectory Analysis**: Built for analyzing entire MD trajectories efficiently
 - 🐍 **Pure Python API**: Familiar interface for Python developers
 
-## Quick Start
+# Quick Start
 
-### Installation
+## Installation
 
 ```bash
 pip install mdsasa-bolt
 ```
 
-### Basic Usage
+## Basic Usage
 
 ```python
 import MDAnalysis as mda
@@ -47,7 +47,7 @@ print(f"SASA per frame: {sasa_analysis.results.total_area}")
 print(f"SASA per residue: {sasa_analysis.results.residue_area}")
 ```
 
-### Advanced Usage
+## Advanced Usage
 
 ```python
 import MDAnalysis as mda
@@ -74,7 +74,7 @@ residue_sasa_matrix = sasa_analysis.results.residue_area  # Shape: (n_frames, n_
 mean_total_sasa = sasa_analysis.results.mean_total_area
 ```
 
-## Performance Benchmarks 🚀
+# Performance Benchmarks 🚀
 
 Benchmarks were performed using Hyperfine with DCD and PSF test trajectory files from MDAnalysisTests:
 
@@ -85,7 +85,7 @@ Benchmarks were performed using Hyperfine with DCD and PSF test trajectory files
 
 *Test system: MDAnalysisTests trajectory data*
 
-## Validation 📊
+# Validation 📊
 
 MDSASA-Bolt has been thoroughly validated against reference implementations to ensure accuracy:
 
@@ -94,13 +94,13 @@ MDSASA-Bolt has been thoroughly validated against reference implementations to e
 
 MDSASA-Bolt acheives a pearson correlation of 0.947 and an RMSE of 167.95 when compared against mdakit_sasa.
 
-## API Reference
+# API Reference
 
-### SASAAnalysis
+## SASAAnalysis
 
 The main analysis class that integrates with MDAnalysis.
 
-#### Parameters
+### Parameters
 
 - **universe_or_atomgroup** (*Universe* or *AtomGroup*): MDAnalysis Universe or AtomGroup to analyze
 - **select** (*str*, optional): Selection string for atoms (default: "all")
@@ -108,7 +108,7 @@ The main analysis class that integrates with MDAnalysis.
 - **stop** (*int*, optional): Last frame to analyze
 - **step** (*int*, optional): Step size between frames
 
-#### Results
+### Results
 
 After calling `run()`, results are available in the `results` attribute:
 
@@ -116,44 +116,19 @@ After calling `run()`, results are available in the `results` attribute:
 - **residue_area** (*numpy.ndarray*): SASA per residue for each frame (shape: n_frames × n_residues)
 - **mean_total_area** (*float*): Mean total SASA across all frames
 
-## Development
-
-### Setting up development environment
-
-```bash
-git clone https://github.com/maxall41/mdsasa-bolt.git
-cd mdsasa-bolt
-uv pip install -e .[dev]
-```
-
-### Running tests
-
-```bash
-pytest tests/
-```
-
-### Code formatting
-
-This project uses Ruff for linting and formatting:
-
-```bash
-ruff check .
-ruff format .
-```
-
-## Contributing
+# Contributing
 
 Contributions are welcome! Please feel free to submit pull requests and open issues. As this is an actively developed library, we encourage sharing your thoughts, ideas, suggestions, and feedback.
 
-## ⚠️ A Note on Compatibility with mdakit_sasa
+# ⚠️ A Note on Compatibility with mdakit_sasa
 
 Inferring the element of an atom can be quite complicated. mdsasa-bolt does it's best to match the freesasa element inference algorithm, but it may not always be accurate. We recommend test the output values of mdsasa-bolt against mdakit-sasa for your usecase before using it in production. We also recommend that you use input files with explicit element information whenever possible.
 
-## License
+# License
 
 This project is licensed under the GNU General Public License v2.0 - see the [LICENSE](LICENSE) file for details.
 
-## Acknowledgments
+# Acknowledgments
 
 - Built on top of [RustSASA](https://github.com/maxall41/RustSASA) library
 - Integrates seamlessly with [MDAnalysis](https://www.mdanalysis.org/)
