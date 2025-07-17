@@ -4,7 +4,6 @@ from collections.abc import Callable
 from typing import TYPE_CHECKING, Union
 
 import freesasa
-import line_profiler
 import numpy as np
 from MDAnalysis import NoDataError
 from MDAnalysis.analysis.base import AnalysisBase
@@ -60,9 +59,6 @@ class SASAAnalysis(AnalysisBase):
 
     """
 
-    _analysis_algorithm_is_parallelizable = True
-
-    @line_profiler.profile
     def __init__(
         self,
         universe_or_atomgroup: Union["Universe", "AtomGroup"],
@@ -142,7 +138,6 @@ class SASAAnalysis(AnalysisBase):
             dtype=float,
         )
 
-    @line_profiler.profile
     def _single_frame(self) -> None:
         """Calculate data from a single frame of trajectory."""
         # Get current positions and construct input_atoms efficiently
