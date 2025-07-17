@@ -92,7 +92,7 @@ MDSASA-Bolt has been thoroughly validated against reference implementations to e
 ![Comparing SASA results](https://github.com/maxall41/mdsasa-bolt/blob/main/bench/sasa_comparison.png)
 
 
-The validation shows excellent agreement between MDSASA-Bolt and reference methods, confirming that the performance improvements don't compromise accuracy.
+MDSASA-Bolt acheives a pearson correlation of 0.947 and an RMSE of 167.95 when compared against mdakit_sasa.
 
 ## API Reference
 
