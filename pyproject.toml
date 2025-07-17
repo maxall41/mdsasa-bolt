@@ -1,0 +1,17 @@
+[project]
+name = "mdsasa-bolt"
+description = "This library allows the calculation of a solvent-accessible-surface area of a trajectory"
+license = { file = "LICENSE" }
+authors = [{ name = "Maxwell Campbell", email = "max@hearthindustries.io" }]
+maintainers = [{ name = "Maxwell Campbell", email = "max@hearthindustries.io" }]
+version = "0.1.0"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    "freesasa>=2.2.1",
+    "mdanalysis>=2.9.0",
+    "numpy>=2.3.1",
+    "pytest>=8.4.1",
+    "rust-sasa-python>=0.2.3",
+]
+keywords = ["molecular simulations", "science", "bioinformatics"]
