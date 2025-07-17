@@ -22,7 +22,8 @@ include = ["mdsasa_bolt*"]
 exclude = ["bench*", "tests*"]
 
 [dependency-groups]
-dev = ["ruff>=0.11.10"]
+dev = ["ruff", "pytest"]
+
 
 [tool.ruff]
 exclude = ['tests/']
