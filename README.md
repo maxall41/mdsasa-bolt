@@ -2,7 +2,6 @@
 
 ![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/maxall41/mdsasa-bolt/python.yml)
 ![PyPI - Version](https://img.shields.io/pypi/v/mdsasa-bolt)
-![PyPI - License](https://img.shields.io/pypi/l/mdsasa-bolt)
 ![Python 3.11+](https://img.shields.io/badge/python-3.11+-blue.svg)
 ![PyPI - Downloads](https://img.shields.io/pypi/dm/mdsasa-bolt)
 
