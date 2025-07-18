@@ -121,7 +121,7 @@ Contributions are welcome! Please feel free to submit pull requests and open iss
 
 # ⚠️ A Note on Compatibility with mdakit_sasa
 
-Inferring the element of an atom can be quite complicated. mdsasa-bolt does it's best to match the freesasa element inference algorithm, but it may not always be accurate. We recommend test the output values of mdsasa-bolt against mdakit-sasa for your usecase before using it in production. We also recommend that you use input files with explicit element information whenever possible.
+Inferring the element of an atom can be quite complicated. mdsasa-bolt does it's best to match the freesasa element inference algorithm, but it may not always be accurate, and may throw an error in some cases where Freesasa will work. Because of this we recommend that you use input files with explicit element information whenever possible.
 
 # License
 
