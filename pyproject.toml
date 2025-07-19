@@ -1,10 +1,10 @@
 [project]
-name = "mdsasa-bolt"
+name = "mdsasa_bolt"
 description = "This library allows the calculation of a solvent-accessible-surface area of a trajectory"
 license = "GPL-2.0"
 authors = [{ name = "Maxwell Campbell", email = "max@hearthindustries.io" }]
 maintainers = [{ name = "Maxwell Campbell", email = "max@hearthindustries.io" }]
-version = "1.0.1"
+version = "1.0.14"
 readme = "README.md"
 requires-python = ">=3.11"
 dependencies = [
@@ -22,8 +22,7 @@ include = ["mdsasa_bolt*"]
 exclude = ["bench*", "tests*"]
 
 [dependency-groups]
-dev = ["ruff", "pytest", "MDAnalysisTests"]
-
+dev = ["ruff", "pytest", "MDAnalysisTests", "maturin"]
 
 [tool.ruff]
 exclude = ['tests/']
@@ -61,3 +60,12 @@ python_files = ["test_*.py"]
 python_classes = ["Test*"]
 python_functions = ["test_*"]
 addopts = "-v --tb=short"
+
+[tool.maturin]
+python-source = "mdsasa_bolt"
+module-name = "mdsasa_bolt.plumber"
+features = ["pyo3/extension-module"]
+
+[build-system]
+requires = ["maturin>=1.9,<2.0"]
+build-backend = "maturin"
