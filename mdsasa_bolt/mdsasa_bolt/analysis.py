@@ -77,6 +77,9 @@ class SASAAnalysis(AnalysisBase):
         self.step = kwargs.get("step", 1)
         self.frames = kwargs.get("frames")
 
+        self.probe_radius = kwargs.get("probe_radius", 1.4)
+        self.n_points = kwargs.get("n_points", 100)
+
         # Determine the best radius calculation method for this system
         self._radius_method = self._determine_radius_method()
 
@@ -134,9 +137,18 @@ class SASAAnalysis(AnalysisBase):
         logger.info(f"Pre-computed radii for {len(radii)} atoms")
         return radii
 
-    def run(self) -> None:
+    def run(self, start=None, stop=None, step=None, frames=None, **kwargs) -> None:
         """Run the analysis."""
-        logger.info(f"Starting analysis start={self.start}, stop={self.stop}, step={self.step}, frames={self.frames}")
+        # Update frame parameters if provided
+        if start is not None:
+            self.start = start
+        if stop is not None:
+            self.stop = stop
+        if step is not None:
+            self.step = step
+        if frames is not None:
+            self.frames = frames
+
         self._setup_frames(
             self._trajectory,
             self.start,
@@ -171,7 +183,7 @@ class SASAAnalysis(AnalysisBase):
             dtype=float,
         )
 
-        frame_residues = plumber.frames(input_atoms_per_frame, 1.4, 100)
+        frame_residues = plumber.frames(input_atoms_per_frame, self.probe_radius, self.n_points)
 
         for frame_index, residues in enumerate(frame_residues):
             self.results.total_area[frame_index] = sum([v.sasa for v in residues])

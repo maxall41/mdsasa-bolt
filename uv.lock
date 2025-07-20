@@ -392,7 +392,7 @@ sdist = { url = "https://files.pythonhosted.org/packages/3d/09/83a486b6686e8d5a2
 
 [[package]]
 name = "mdsasa-bolt"
-version = "1.0.1"
+version = "1.1.0"
 source = { editable = "." }
 dependencies = [
     { name = "biopython" },

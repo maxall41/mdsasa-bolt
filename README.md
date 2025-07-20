@@ -60,9 +60,11 @@ u = mda.Universe("system.gro", "trajectory.xtc")
 sasa_analysis = SASAAnalysis(
     u,
     select="resname LYS or resname ARG",  # Only basic residues
-    start=100,                           # Start from frame 100
-    stop=1000,                          # End at frame 1000
-    step=10                             # Analyze every 10th frame
+    start=100,                     # Start from frame 100
+    stop=1000,                     # End at frame 1000
+    step=10,                       # Analyze every 10th frame
+    probe_radius=1.4,              # Custom probe radius Default:1.4
+    n_points=960                   # Custom number of points Default: 960
 )
 
 # Run analysis
