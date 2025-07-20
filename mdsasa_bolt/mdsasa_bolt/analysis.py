@@ -71,12 +71,6 @@ class SASAAnalysis(AnalysisBase):
         self.atomgroup: AtomGroup = universe_or_atomgroup.select_atoms(select)
         self._classifier = freesasa.Classifier().getStandardClassifier("protor")
 
-        # Capture frame parameters from kwargs
-        self.start = kwargs.get("start", 0)
-        self.stop = kwargs.get("stop")
-        self.step = kwargs.get("step", 1)
-        self.frames = kwargs.get("frames")
-
         self.probe_radius = kwargs.get("probe_radius", 1.4)
         self.n_points = kwargs.get("n_points", 100)
 
@@ -137,7 +131,9 @@ class SASAAnalysis(AnalysisBase):
         logger.info(f"Pre-computed radii for {len(radii)} atoms")
         return radii
 
-    def run(self, start=None, stop=None, step=None, frames=None, **kwargs) -> None:
+    def run(
+        self, start: int = 0, stop: None | int = None, step: int = 1, frames: None | list[int] = None, **kwargs
+    ) -> None:
         """Run the analysis."""
         # Update frame parameters if provided
         if start is not None:
