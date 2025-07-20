@@ -9,7 +9,7 @@ MDSASA-Bolt is a **high-performance Python library** for computing solvent acces
 
 # Features
 
-- ⚡️ **Ludicrous Speed**: **11x faster** than mdakit-sasa.
+- ⚡️ **Ludicrous Speed**: **17x faster** than mdakit-sasa.
 - 🔄 **Drop-in Replacement**: Compatible with existing mdakit-sasa workflows.
 - 🧬 **MDAnalysis Integration**: Seamlessly works with MDAnalysis Universe and AtomGroup objects.
 - 🦀 **Powered by [RustSASA](https://github.com/maxall41/RustSASA)**: Leverages Rust's performance and safety.
@@ -59,13 +59,16 @@ u = mda.Universe("system.gro", "trajectory.xtc")
 sasa_analysis = SASAAnalysis(
     u,
     select="resname LYS or resname ARG",  # Only basic residues
-    start=100,                           # Start from frame 100
-    stop=1000,                          # End at frame 1000
-    step=10                             # Analyze every 10th frame
 )
 
 # Run analysis
-sasa_analysis.run()
+sasa_analysis.run(
+    start=100,                     # Start from frame 100
+    stop=1000,                     # End at frame 1000
+    step=10,                       # Analyze every 10th frame
+    probe_radius=1.4,              # Custom probe radius Default:1.4
+    n_points=960                   # Custom number of points Default: 960
+)
 
 # Results are available as numpy arrays
 total_sasa_per_frame = sasa_analysis.results.total_area
@@ -79,7 +82,7 @@ Benchmarks were performed using molecular dynamics data for [4IAQ from the GPCRM
 
 | Method | Time | Speedup |
 |--------|------|---------|
-| **mdsasa-bolt** | **40.396 s ±  2.630 s** | **11x faster** |
+| **mdsasa-bolt** | **25.939 s ±  0.914 s** | **17x faster** |
 | mdakit-sasa | 450.930 s ±  1.215 s  | baseline |
 
 *Test system: MDAnalysisTests trajectory data*
@@ -123,6 +126,7 @@ Contributions are welcome! Please feel free to submit pull requests and open iss
 
 Inferring the element of an atom can be quite complicated. mdsasa-bolt does it's best to match the freesasa element inference algorithm, but it may not always be accurate, and may throw an error in some cases where Freesasa will work. Because of this we recommend that you use input files with explicit element information whenever possible.
 
+
 # License
 
 This project is licensed under the GNU General Public License v2.0 - see the [LICENSE](LICENSE) file for details.
@@ -132,7 +136,3 @@ This project is licensed under the GNU General Public License v2.0 - see the [LI
 - Built on top of [RustSASA](https://github.com/maxall41/RustSASA) library
 - Integrates seamlessly with [MDAnalysis](https://www.mdanalysis.org/)
 - Inspired by the [mdakit-sasa](https://github.com/MDAnalysis/mdakit-sasa) project
-
-# Roadmap
-
-- [ ] Ovveride `run` method to pass all frame data into rust at start and then perform iteration and parallelization in rust. Should signifgantly improve performance.

@@ -8,8 +8,8 @@ import numpy as np
 from MDAnalysis import NoDataError
 from MDAnalysis.analysis.base import AnalysisBase
 from MDAnalysis.core.groups import Atom
-from rust_sasa_python import Residue, calculate_sasa_internal_at_residue_level
 
+from . import plumber
 from .inference import get_all_radii_methods
 
 if TYPE_CHECKING:
@@ -71,6 +71,9 @@ class SASAAnalysis(AnalysisBase):
         self.atomgroup: AtomGroup = universe_or_atomgroup.select_atoms(select)
         self._classifier = freesasa.Classifier().getStandardClassifier("protor")
 
+        self.probe_radius = kwargs.get("probe_radius", 1.4)
+        self.n_points = kwargs.get("n_points", 100)
+
         # Determine the best radius calculation method for this system
         self._radius_method = self._determine_radius_method()
 
@@ -128,7 +131,45 @@ class SASAAnalysis(AnalysisBase):
         logger.info(f"Pre-computed radii for {len(radii)} atoms")
         return radii
 
-    def _prepare(self) -> None:
+    def run(
+        self,
+        start: int = 0,
+        stop: None | int = None,
+        step: int = 1,
+        frames: None | list[int] = None,
+    ) -> None:
+        """Run the analysis."""
+        # Update frame parameters if provided
+        self.start = start
+        self.stop = stop
+        self.step = step
+        self.frames = frames
+
+        self._setup_frames(
+            self._trajectory,
+            self.start,
+            self.stop,
+            self.step,
+            self.frames,
+        )
+
+        input_atoms_per_frame = []
+
+        # Iterate over trajectory (which now respects the frame parameters)
+        for _ in self._sliced_trajectory:
+            input_atoms = [
+                (tuple(position), radius, resnum)
+                for position, radius, resnum in zip(
+                    self.atomgroup.positions.copy(),
+                    self._atom_radii,
+                    self._atom_resnums,
+                    strict=False,
+                )
+            ]
+            input_atoms_per_frame.append(input_atoms)
+
+        self.stop = len(input_atoms_per_frame)
+
         self.results.total_area = np.zeros(
             self.n_frames,
             dtype=float,
@@ -138,32 +179,16 @@ class SASAAnalysis(AnalysisBase):
             dtype=float,
         )
 
-    def _single_frame(self) -> None:
-        """Calculate data from a single frame of trajectory."""
-        # Get current positions and construct input_atoms efficiently
-        positions = self.atomgroup.positions
+        frame_residues = plumber.frames(input_atoms_per_frame, self.probe_radius, self.n_points)
 
-        input_atoms = [
-            (tuple(position), radius, resnum)
-            for position, radius, resnum in zip(
-                positions,
-                self._atom_radii,
-                self._atom_resnums,
-                strict=False,
-            )
-        ]
-
-        residue_sasa_values: list[Residue] = calculate_sasa_internal_at_residue_level(input_atoms, 1.4, 100)
-
-        self.results.total_area[self._frame_index] = sum([v.sasa for v in residue_sasa_values])
-
-        # Defend against residue counts mismatch
-        if len(self.universe.residues.resids) != len(residue_sasa_values):
-            logger.error(
-                "Residue count does not match the expectation",
-            )
-        else:
-            self.results.residue_area[self._frame_index] = [r.sasa for r in residue_sasa_values]
+        for frame_index, residues in enumerate(frame_residues):
+            self.results.total_area[frame_index] = sum([v.sasa for v in residues])
+            if len(self.universe.residues.resids) != len(residues):
+                logger.error(
+                    "Residue count does not match the expectation! Not saving per residue SASA data!",
+                )
+            else:
+                self.results.residue_area[frame_index] = [r.sasa for r in residues]
 
     def _conclude(self) -> None:
         self.results.mean_total_area = self.results.total_area.mean()

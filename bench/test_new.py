@@ -20,7 +20,7 @@ selected_atoms = u.select_atoms("not (resname TIP3 or resname SOD or resname CLA
 filtered_residues = [r for r in u.residues if r.resname not in {"TIP3", "CLA", "SOD", "POPC"}]
 u.residues = u.residues[np.array([r.ix for r in filtered_residues])]
 
-analysis = SASAAnalysis(selected_atoms, select="all")
+analysis = SASAAnalysis(selected_atoms)
 analysis.run()
 
 if len(sys.argv) > 1 and sys.argv[1] == "save":
