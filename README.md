@@ -126,6 +126,8 @@ Contributions are welcome! Please feel free to submit pull requests and open iss
 
 Inferring the element of an atom can be quite complicated. mdsasa-bolt does it's best to match the freesasa element inference algorithm, but it may not always be accurate, and may throw an error in some cases where Freesasa will work. Because of this we recommend that you use input files with explicit element information whenever possible.
 
+Also note that by default RustSASA **includes hydrogen atoms in SASA calculations** where FreeSASA excludes them.
+
 
 # License
 
