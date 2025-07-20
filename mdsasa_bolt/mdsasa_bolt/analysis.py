@@ -134,7 +134,8 @@ class SASAAnalysis(AnalysisBase):
         logger.info(f"Pre-computed radii for {len(radii)} atoms")
         return radii
 
-    def run(self):
+    def run(self) -> None:
+        """Run the analysis."""
         logger.info(f"Starting analysis start={self.start}, stop={self.stop}, step={self.step}, frames={self.frames}")
         self._setup_frames(
             self._trajectory,
