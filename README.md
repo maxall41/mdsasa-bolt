@@ -2,7 +2,6 @@
 
 ![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/maxall41/mdsasa-bolt/python.yml)
 ![PyPI - Version](https://img.shields.io/pypi/v/mdsasa-bolt)
-![PyPI - License](https://img.shields.io/pypi/l/mdsasa-bolt)
 ![Python 3.11+](https://img.shields.io/badge/python-3.11+-blue.svg)
 ![PyPI - Downloads](https://img.shields.io/pypi/dm/mdsasa-bolt)
 
@@ -125,7 +124,8 @@ Contributions are welcome! Please feel free to submit pull requests and open iss
 
 # ⚠️ A Note on Compatibility with mdakit_sasa
 
-Inferring the element of an atom can be quite complicated. mdsasa-bolt does it's best to match the freesasa element inference algorithm, but it may not always be accurate. Due to this we recommend that you use input files with explicit element information whenever possible.
+Inferring the element of an atom can be quite complicated. mdsasa-bolt does it's best to match the freesasa element inference algorithm, but it may not always be accurate, and may throw an error in some cases where Freesasa will work. Because of this we recommend that you use input files with explicit element information whenever possible.
+
 
 # License
 
