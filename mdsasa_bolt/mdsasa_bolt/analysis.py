@@ -65,12 +65,17 @@ class SASAAnalysis(AnalysisBase):
         select: str = "all",
         **kwargs,
     ) -> None:
-        # TODO: Support start=None, stop=None, step=None, frames=None
         """Initialize SASAAnalysis."""
         super().__init__(universe_or_atomgroup.universe.trajectory, **kwargs)
         self.universe = universe_or_atomgroup.universe
         self.atomgroup: AtomGroup = universe_or_atomgroup.select_atoms(select)
         self._classifier = freesasa.Classifier().getStandardClassifier("protor")
+
+        # Capture frame parameters from kwargs
+        self.start = kwargs.get("start", 0)
+        self.stop = kwargs.get("stop")
+        self.step = kwargs.get("step", 1)
+        self.frames = kwargs.get("frames")
 
         # Determine the best radius calculation method for this system
         self._radius_method = self._determine_radius_method()
@@ -130,8 +135,19 @@ class SASAAnalysis(AnalysisBase):
         return radii
 
     def run(self):
+        logger.info(f"Starting analysis start={self.start}, stop={self.stop}, step={self.step}, frames={self.frames}")
+        self._setup_frames(
+            self._trajectory,
+            self.start,
+            self.stop,
+            self.step,
+            self.frames,
+        )
+
         input_atoms_per_frame = []
-        for _ in self._trajectory:
+
+        # Iterate over trajectory (which now respects the frame parameters)
+        for _ in self._sliced_trajectory:
             input_atoms = [
                 (tuple(position), radius, resnum)
                 for position, radius, resnum in zip(
@@ -143,7 +159,7 @@ class SASAAnalysis(AnalysisBase):
             ]
             input_atoms_per_frame.append(input_atoms)
 
-        self.n_frames = len(input_atoms_per_frame)
+        self.stop = len(input_atoms_per_frame)
 
         self.results.total_area = np.zeros(
             self.n_frames,

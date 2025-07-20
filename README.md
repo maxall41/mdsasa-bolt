@@ -122,7 +122,7 @@ Contributions are welcome! Please feel free to submit pull requests and open iss
 
 # ⚠️ A Note on Compatibility with mdakit_sasa
 
-Inferring the element of an atom can be quite complicated. mdsasa-bolt does it's best to match the freesasa element inference algorithm, but it may not always be accurate. We recommend test the output values of mdsasa-bolt against mdakit-sasa for your usecase before using it in production. We also recommend that you use input files with explicit element information whenever possible.
+Inferring the element of an atom can be quite complicated. mdsasa-bolt does it's best to match the freesasa element inference algorithm, but it may not always be accurate. Due to this we recommend that you use input files with explicit element information whenever possible.
 
 # License
 
@@ -133,7 +133,3 @@ This project is licensed under the GNU General Public License v2.0 - see the [LI
 - Built on top of [RustSASA](https://github.com/maxall41/RustSASA) library
 - Integrates seamlessly with [MDAnalysis](https://www.mdanalysis.org/)
 - Inspired by the [mdakit-sasa](https://github.com/MDAnalysis/mdakit-sasa) project
-
-# Roadmap
-
-- [ ] Ovveride `run` method to pass all frame data into rust at start and then perform iteration and parallelization in rust. Should signifgantly improve performance.
