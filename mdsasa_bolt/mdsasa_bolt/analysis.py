@@ -140,14 +140,10 @@ class SASAAnalysis(AnalysisBase):
     ) -> None:
         """Run the analysis."""
         # Update frame parameters if provided
-        if start is not None:
-            self.start = start
-        if stop is not None:
-            self.stop = stop
-        if step is not None:
-            self.step = step
-        if frames is not None:
-            self.frames = frames
+        self.start = start
+        self.stop = stop
+        self.step = step
+        self.frames = frames
 
         self._setup_frames(
             self._trajectory,
