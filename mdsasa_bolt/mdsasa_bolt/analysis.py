@@ -132,7 +132,11 @@ class SASAAnalysis(AnalysisBase):
         return radii
 
     def run(
-        self, start: int = 0, stop: None | int = None, step: int = 1, frames: None | list[int] = None, **kwargs
+        self,
+        start: int = 0,
+        stop: None | int = None,
+        step: int = 1,
+        frames: None | list[int] = None,
     ) -> None:
         """Run the analysis."""
         # Update frame parameters if provided
