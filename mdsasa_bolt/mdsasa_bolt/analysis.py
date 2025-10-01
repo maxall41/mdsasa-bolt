@@ -187,7 +187,7 @@ class SASAAnalysis(AnalysisBase):
             self.results.total_area[frame_index] = sum([v.sasa for v in residues])
             if len(self.universe.residues.resids) != len(residues):
                 logger.error(
-                    f"Residue count does not match the expectation! Not saving per residue SASA data! universe: {len(self.universe.residues.resids)}, frame: {len(residues)}",  # noqa: E501 G004
+                    f"Residue count does not match the expectation! Not saving per residue SASA data! universe: {len(self.universe.residues.resids)}, frame: {len(residues)}",  # noqa: E501
                 )
             else:
                 self.results.residue_area[frame_index] = [r.sasa for r in residues]
