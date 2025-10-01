@@ -1,19 +1,17 @@
 # Copyright (C) 2025 Maxwell J. Campbell
 import logging
 from collections.abc import Callable
-from typing import TYPE_CHECKING, Union
+from typing import Union
 
 import freesasa
 import numpy as np
 from MDAnalysis import NoDataError
 from MDAnalysis.analysis.base import AnalysisBase
 from MDAnalysis.core.groups import Atom
+from MDAnalysis.core.universe import AtomGroup, Universe
 
 from . import plumber
 from .inference import get_all_radii_methods
-
-if TYPE_CHECKING:
-    from MDAnalysis.core.universe import AtomGroup, Universe
 
 logger = logging.getLogger(__name__)
 
@@ -67,7 +65,9 @@ class SASAAnalysis(AnalysisBase):
     ) -> None:
         """Initialize SASAAnalysis."""
         super().__init__(universe_or_atomgroup.universe.trajectory, **kwargs)
-        self.universe = universe_or_atomgroup.universe
+
+        self.universe = universe_or_atomgroup
+
         self.atomgroup: AtomGroup = universe_or_atomgroup.select_atoms(select)
         self._classifier = freesasa.Classifier().getStandardClassifier("protor")
 
@@ -185,7 +185,7 @@ class SASAAnalysis(AnalysisBase):
             self.results.total_area[frame_index] = sum([v.sasa for v in residues])
             if len(self.universe.residues.resids) != len(residues):
                 logger.error(
-                    "Residue count does not match the expectation! Not saving per residue SASA data!",
+                    f"Residue count does not match the expectation! Not saving per residue SASA data! universe: {len(self.universe.residues.resids)}, frame: {len(residues)}",
                 )
             else:
                 self.results.residue_area[frame_index] = [r.sasa for r in residues]

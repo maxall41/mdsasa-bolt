@@ -4,7 +4,7 @@ description = "This library allows the calculation of a solvent-accessible-surfa
 license = "GPL-2.0"
 authors = [{ name = "Maxwell Campbell", email = "max@hearthindustries.io" }]
 maintainers = [{ name = "Maxwell Campbell", email = "max@hearthindustries.io" }]
-version = "1.1.0"
+version = "1.2.4"
 readme = "README.md"
 requires-python = ">=3.11"
 dependencies = [
