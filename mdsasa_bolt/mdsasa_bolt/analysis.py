@@ -1,14 +1,16 @@
 # Copyright (C) 2025 Maxwell J. Campbell
 import logging
 from collections.abc import Callable
-from typing import Union
+from typing import TYPE_CHECKING, Union
 
 import freesasa
 import numpy as np
 from MDAnalysis import NoDataError
 from MDAnalysis.analysis.base import AnalysisBase
 from MDAnalysis.core.groups import Atom
-from MDAnalysis.core.universe import AtomGroup, Universe
+
+if TYPE_CHECKING:
+    from MDAnalysis.core.universe import AtomGroup, Universe
 
 from . import plumber
 from .inference import get_all_radii_methods
@@ -185,7 +187,7 @@ class SASAAnalysis(AnalysisBase):
             self.results.total_area[frame_index] = sum([v.sasa for v in residues])
             if len(self.universe.residues.resids) != len(residues):
                 logger.error(
-                    f"Residue count does not match the expectation! Not saving per residue SASA data! universe: {len(self.universe.residues.resids)}, frame: {len(residues)}",
+                    f"Residue count does not match the expectation! Not saving per residue SASA data! universe: {len(self.universe.residues.resids)}, frame: {len(residues)}",  # noqa: E501 G004
                 )
             else:
                 self.results.residue_area[frame_index] = [r.sasa for r in residues]
