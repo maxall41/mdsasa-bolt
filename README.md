@@ -9,7 +9,7 @@ MDSASA-Bolt is a **high-performance Python library** for computing solvent acces
 
 # Features
 
-- ⚡️ **Ludicrous Speed**: **17x faster** than mdakit-sasa.
+- ⚡️ **Ludicrous Speed**: **20x faster** than mdakit-sasa.
 - 🔄 **Drop-in Replacement**: Compatible with existing mdakit-sasa workflows.
 - 🧬 **MDAnalysis Integration**: Seamlessly works with MDAnalysis Universe and AtomGroup objects.
 - 🦀 **Powered by [RustSASA](https://github.com/maxall41/RustSASA)**: Leverages Rust's performance and safety.
@@ -82,7 +82,7 @@ Benchmarks were performed using molecular dynamics data for [4IAQ from the GPCRM
 
 | Method | Time | Speedup |
 |--------|------|---------|
-| **mdsasa-bolt** | **25.939 s ±  0.914 s** | **17x faster** |
+| **mdsasa-bolt** | **22.019 s ±  0.499 s** | **20x faster** |
 | mdakit-sasa | 450.930 s ±  1.215 s  | baseline |
 
 *Test system: MDAnalysisTests trajectory data*

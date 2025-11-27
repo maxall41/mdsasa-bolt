@@ -11,7 +11,7 @@ from mdsasa_bolt.analysis import SASAAnalysis
 logging.basicConfig(level=logging.INFO, format="%(name)s - %(levelname)s - %(message)s")
 
 u = MDa.Universe(
-    "/Users/maxcampbell/mdsasa-bolt/bench/10827_dyn_85.psf",
+    "/Users/maxcampbell/mdsasa-bolt/bench/10827_dyn_85.psf",  # 4IAQ: https://www.gpcrmd.org/view/85/
     "/Users/maxcampbell/mdsasa-bolt/bench/10824_trj_85.xtc",
 )
 

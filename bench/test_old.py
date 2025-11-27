@@ -6,7 +6,7 @@ from mdakit_sasa.analysis.sasaanalysis import SASAAnalysis
 from utils import save
 
 u = MDa.Universe(
-    "/Users/maxcampbell/mdsasa-bolt/bench/10827_dyn_85.psf",
+    "/Users/maxcampbell/mdsasa-bolt/bench/10827_dyn_85.psf",  # 4IAQ: https://www.gpcrmd.org/view/85/
     "/Users/maxcampbell/mdsasa-bolt/bench/10824_trj_85.xtc",
 )
 
