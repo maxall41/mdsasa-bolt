@@ -82,7 +82,7 @@ def main() -> None:
         transform=ax.transAxes,
         va="top",
         fontsize=fontsize - 2,
-        bbox=dict(boxstyle="round,pad=0.3", facecolor="white", edgecolor="gray", alpha=0.8),
+        bbox={"boxstyle": "round,pad=0.3", "facecolor": "white", "edgecolor": "gray", "alpha": 0.8},
     )
 
     plt.tight_layout()
