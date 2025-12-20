@@ -16,51 +16,77 @@ def load_results(filename: str) -> np.ndarray:
 def main() -> None:
     """Compare SASA results from old and new implementations."""
     # Load results from both implementations
-    old_results = load_results("old_sasa_results.txt")
-    new_results = load_results("new_sasa_results.txt")
+    old_results = load_results("mdakit_results.txt")
+    new_results = load_results("rustsasa_results.txt")
 
     # Calculate Pearson correlation
     correlation, p_value = pearsonr(old_results, new_results)
 
-    # Create scatter plot
-    plt.figure(figsize=(8, 8))
-    plt.scatter(old_results, new_results, alpha=0.6, s=20)
-
-    # Get current axis limits after scatter plot
-    xlim = plt.xlim()
-    ylim = plt.ylim()
-
-    # Add perfect correlation line spanning the full diagonal
-    line_min = min(xlim[0], ylim[0])
-    line_max = max(xlim[1], ylim[1])
-    plt.plot([line_min, line_max], [line_min, line_max], "r--", alpha=0.8, label="Perfect correlation")
-
-    # Add labels and title
-    plt.xlabel("Old SASA Implementation")
-    plt.ylabel("New SASA Implementation")
-    plt.title(f"SASA Results Comparison\nPearson r = {correlation:.6f}, p = {p_value:.2e}")
-    plt.legend()
-
-    # Add grid
-    plt.grid(True, alpha=0.3)
-
-    # Add some statistics as text
-    mean_diff = np.mean(new_results - old_results)
+    # Calculate statistics
     rmse = np.sqrt(np.mean((new_results - old_results) ** 2))
 
-    stats_text = f"Mean difference: {mean_diff:.3f} Ų\nRMSE: {rmse:.3f} Ų\nN points: {len(old_results)}"
-    plt.text(
+    # Create figure with proper axis styling
+    fig, ax = plt.subplots(figsize=(8, 8))
+
+    # Style parameters
+    fontsize = 14
+    linewidth = 2.0
+    colors = ["#4477AA"]  # Color-blind friendly blue
+
+    # Remove top and right spines
+    ax.spines["right"].set_visible(False)
+    ax.spines["top"].set_visible(False)
+    ax.spines["left"].set_linewidth(linewidth)
+    ax.spines["bottom"].set_linewidth(linewidth)
+    ax.xaxis.set_tick_params(width=linewidth, length=8, direction="out")
+    ax.yaxis.set_tick_params(width=linewidth, length=8, direction="out")
+
+    # Scatter plot with professional styling
+    ax.scatter(
+        old_results,
+        new_results,
+        alpha=0.6,
+        s=50,
+        color=colors[0],
+        edgecolor="none",
+    )
+
+    # Add diagonal line (perfect correlation)
+    min_val = min(old_results.min(), new_results.min())
+    max_val = max(old_results.max(), new_results.max())
+    ax.plot([min_val, max_val], [min_val, max_val], color="gray", linestyle="--", linewidth=2)
+
+    # Labels and title
+    ax.set_xlabel("mdakit-sasa", fontsize=fontsize + 2)
+    ax.set_ylabel("RustSASA", fontsize=fontsize + 2)
+    ax.set_title("SASA Results Comparison", fontsize=fontsize + 2, pad=10)
+
+    # Tick styling
+    ax.tick_params(axis="both", which="major", labelsize=fontsize)
+    ax.ticklabel_format(style="sci", axis="both", scilimits=(0, 0))
+    ax.xaxis.get_offset_text().set_fontsize(fontsize - 2)
+    ax.yaxis.get_offset_text().set_fontsize(fontsize - 2)
+
+    # Grid
+    ax.grid(True, alpha=0.3, linestyle="--")
+
+    # Equal aspect ratio
+    ax.set_aspect("equal", adjustable="box")
+
+    # Statistics box
+    stats_text = f"n = {len(old_results)}\nr = {correlation:.4f}\np = {p_value:.2e}\nRMSE = {rmse:.2f}"
+    ax.text(
         0.05,
         0.95,
         stats_text,
-        transform=plt.gca().transAxes,
-        verticalalignment="top",
-        bbox={"boxstyle": "round", "facecolor": "wheat", "alpha": 0.8},
+        transform=ax.transAxes,
+        va="top",
+        fontsize=fontsize - 2,
+        bbox=dict(boxstyle="round,pad=0.3", facecolor="white", edgecolor="gray", alpha=0.8),
     )
 
     plt.tight_layout()
     plt.savefig("bench/sasa_comparison.png", dpi=300, bbox_inches="tight")
-    plt.show()
 
     # Print summary statistics
 

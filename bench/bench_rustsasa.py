@@ -21,4 +21,4 @@ analysis = SASAAnalysis(selected_atoms)
 analysis.run()
 
 if len(sys.argv) > 1 and sys.argv[1] == "save":
-    save(analysis, "new_sasa_results.txt")
+    save(analysis, "rustsasa_results.txt")

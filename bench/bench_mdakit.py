@@ -17,4 +17,4 @@ analysis = SASAAnalysis(selected_atoms)
 analysis.run()
 
 if len(sys.argv) > 1 and sys.argv[1] == "save":
-    save(analysis, "old_sasa_results.txt")
+    save(analysis, "mdakit_results.txt")

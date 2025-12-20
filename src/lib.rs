@@ -4,8 +4,8 @@ use pyo3::prelude::*;
 mod simd;
 use nalgebra::Point3;
 use rayon::prelude::*;
-use rust_sasa::calculate_sasa_internal as calculate_sasa_internal_internal;
 use rust_sasa::Atom;
+use rust_sasa::calculate_sasa_internal as calculate_sasa_internal_internal;
 use simd::simd_sum;
 
 #[pyclass]
@@ -32,7 +32,7 @@ pub fn calculate_sasa_internal(
         .into_iter()
         .enumerate()
         .map(|(index, (pos, radius, parent_id))| Atom {
-            position: Point3::new(pos.0, pos.1, pos.2),
+            position: [pos.0, pos.1, pos.2],
             id: index,
             parent_id: Some(parent_id as isize),
             radius,
@@ -42,7 +42,7 @@ pub fn calculate_sasa_internal(
         atoms.as_slice(),
         probe_radius,
         n_points,
-        false,
+        1,
     ))
 }
 
