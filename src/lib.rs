@@ -2,7 +2,6 @@ use std::collections::HashMap;
 
 use pyo3::prelude::*;
 mod simd;
-use nalgebra::Point3;
 use rayon::prelude::*;
 use rust_sasa::Atom;
 use rust_sasa::calculate_sasa_internal as calculate_sasa_internal_internal;
