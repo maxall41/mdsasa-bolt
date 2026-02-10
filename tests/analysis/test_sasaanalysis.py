@@ -75,6 +75,34 @@ class TestSASAAnalysis:
         assert np.all(analysis.results["residue_area"] >= 0)
         assert analysis.results["residue_area"].shape == (3, 25)
 
+    def test_custom_radii_dict(self, universe: MDa.Universe) -> None:
+        """Test passing custom radii as a dict keyed by atom type."""
+        analysis = SASAAnalysis(universe, radii={"O": 2.0})
+        analysis.run(stop=3)
+        assert analysis.n_frames == 3
+        assert np.all(analysis.results["total_area"] > 0)
+        assert np.all(analysis._atom_radii == 2.0)
+
+    def test_custom_radii_array(self, universe: MDa.Universe) -> None:
+        """Test passing custom radii as a per-atom array."""
+        n_atoms = len(universe.select_atoms("all"))
+        custom_radii = [1.5] * n_atoms
+        analysis = SASAAnalysis(universe, radii=custom_radii)
+        analysis.run(stop=3)
+        assert analysis.n_frames == 3
+        assert np.all(analysis.results["total_area"] > 0)
+        assert np.all(analysis._atom_radii == 1.5)
+
+    def test_custom_radii_dict_missing_type(self, universe: MDa.Universe) -> None:
+        """Test that a missing atom type in the radii dict raises ValueError."""
+        with pytest.raises(ValueError, match="missing entry for atom type"):
+            SASAAnalysis(universe, radii={"NONEXISTENT": 2.0})
+
+    def test_custom_radii_array_wrong_length(self, universe: MDa.Universe) -> None:
+        """Test that wrong-length radii array raises ValueError."""
+        with pytest.raises(ValueError, match="does not match"):
+            SASAAnalysis(universe, radii=[1.0, 2.0])
+
     def test_calculation(self):
         u = MDa.Universe(PARENT / 'data' / 'cobrotoxin.pdb', PARENT / 'data' / 'cobrotoxin.trr')
 
