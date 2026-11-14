@@ -14,6 +14,7 @@ wheels/
 *.xtc
 *.psf
 *.lock
+!/Cargo.lock
 *.npz
 
 
