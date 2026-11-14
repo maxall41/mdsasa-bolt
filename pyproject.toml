@@ -22,7 +22,7 @@ include = ["mdsasa_bolt*"]
 exclude = ["bench*", "tests*"]
 
 [dependency-groups]
-dev = ["ruff", "pytest", "MDAnalysisTests", "maturin"]
+dev = ["ruff", "pytest", "MDAnalysisTests", "maturin==1.16.0"]
 
 [tool.ruff]
 exclude = ['tests/']
@@ -67,5 +67,5 @@ module-name = "mdsasa_bolt.plumber"
 features = ["pyo3/extension-module"]
 
 [build-system]
-requires = ["maturin>=1.9,<2.0"]
+requires = ["maturin==1.16.0"]
 build-backend = "maturin"
