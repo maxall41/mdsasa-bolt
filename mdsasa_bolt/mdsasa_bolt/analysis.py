@@ -63,25 +63,62 @@ class SASAAnalysis(AnalysisBase):
         self,
         universe_or_atomgroup: Union["Universe", "AtomGroup"],
         select: str = "all",
+        radii: Union[dict[str, float], list[float], "np.ndarray", None] = None,
         **kwargs,
     ) -> None:
-        """Initialize SASAAnalysis."""
+        """Initialize SASAAnalysis.
+
+        Parameters
+        ----------
+        universe_or_atomgroup : Universe or AtomGroup
+            Universe or group of atoms to apply this analysis to.
+        select : str
+            Selection string for atoms to extract.
+        radii : dict[str, float] or array-like of float, optional
+            Custom atomic radii. Can be either:
+            - A dict mapping atom types to radii (e.g. ``{"BB": 2.64, "SC1": 2.3}``).
+            - A list/array of per-atom radii with length matching the number of
+              selected atoms.
+            When ``None`` (default), radii are inferred automatically using FreeSASA.
+
+        """
         super().__init__(universe_or_atomgroup.universe.trajectory, **kwargs)
 
         self.universe = universe_or_atomgroup
 
         self.atomgroup: AtomGroup = universe_or_atomgroup.select_atoms(select)
-        self._classifier = freesasa.Classifier().getStandardClassifier("protor")
 
         self.probe_radius = kwargs.get("probe_radius", 1.4)
         self.n_points = kwargs.get("n_points", 100)
 
-        # Determine the best radius calculation method for this system
-        self._radius_method = self._determine_radius_method()
+        if radii is not None:
+            self._atom_radii = self._resolve_custom_radii(radii)
+        else:
+            self._classifier = freesasa.Classifier().getStandardClassifier("protor")
+            self._radius_method = self._determine_radius_method()
+            self._atom_radii = self._calculate_atom_radii(self._radius_method)
 
-        # Pre-compute radii for all atoms using the determined method
-        self._atom_radii = self._calculate_atom_radii(self._radius_method)
         self._atom_resnums = np.array([atom.resnum.item() for atom in self.atomgroup])
+
+    def _resolve_custom_radii(self, radii: Union[dict[str, float], list[float], "np.ndarray"]) -> np.ndarray:
+        """Resolve user-provided radii into a per-atom numpy array."""
+        n_atoms = len(self.atomgroup)
+
+        if isinstance(radii, dict):
+            result = np.zeros(n_atoms, dtype=float)
+            for i, atom in enumerate(self.atomgroup):
+                atom_type = atom.type
+                if atom_type not in radii:
+                    msg = f"Custom radii dict missing entry for atom type '{atom_type}' (atom index {i})"
+                    raise ValueError(msg)
+                result[i] = radii[atom_type]
+            return result
+
+        result = np.asarray(radii, dtype=float)
+        if result.shape != (n_atoms,):
+            msg = f"Custom radii array length ({result.shape}) does not match number of selected atoms ({n_atoms})"
+            raise ValueError(msg)
+        return result
 
     def _determine_radius_method(self) -> Callable:
         """Determine the best radius calculation method for this system."""
