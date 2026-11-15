@@ -1,5 +1,5 @@
 version = 1
-revision = 3
+revision = 5
 requires-python = ">=3.11"
 
 [[package]]
@@ -350,7 +350,7 @@ wheels = [
 
 [[package]]
 name = "mdanalysis"
-version = "2.9.0"
+version = "2.11.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "filelock" },
@@ -365,32 +365,40 @@ dependencies = [
     { name = "threadpoolctl" },
     { name = "tqdm" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/9e/0b/ad2805c66246cbc9b7dca5a086316da0687135b5c6786da7b75ea9e1622d/mdanalysis-2.9.0.tar.gz", hash = "sha256:fe7a4ac33e7a5c1001d954667d7e630aeb26cab6f8917fdbac6ffad903999497", size = 5156874, upload-time = "2025-03-11T21:57:43.647Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/81/20/376e8a20c8b74523baa39f5f71d986971b228275e0c0be73fa9a3a7b94a4/mdanalysis-2.11.0.tar.gz", hash = "sha256:aee95dc08d55169c58adbeb2980ff4a39b153bf85f55f291c6c0f7b8226223b0", size = 5450970, upload-time = "2026-10-21T12:58:52.405Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/0f/e7/d6847d62dcddb2840c34a2a5b1c11719a6555960870bd30009bd28785af3/mdanalysis-2.9.0-cp311-cp311-macosx_10_9_x86_64.whl", hash = "sha256:68f4f710f7c0ced95630cb5a6e5a1e61038f207106a963879cfecaebb4e6ca29", size = 6561484, upload-time = "2025-03-11T21:57:19.781Z" },
-    { url = "https://files.pythonhosted.org/packages/b2/f9/22d172baaa9f7835e3bff8cc47556994e847706f9674b3d885017da670c4/mdanalysis-2.9.0-cp311-cp311-macosx_11_0_arm64.whl", hash = "sha256:c5ad6fa37ca6e14f403375d95fcb86be43bc1067ce401fe30105deac6eaa3e51", size = 6465691, upload-time = "2025-03-11T21:57:21.942Z" },
-    { url = "https://files.pythonhosted.org/packages/79/0a/4a188b1027da4335f9fda8ed4a57e16bfdc8c0bcd24a3538b88cd32bfbb1/mdanalysis-2.9.0-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:13951ccb5c03e3c79ee5bbd4670fcece7060622161989b5eb2c389321f0df218", size = 12989491, upload-time = "2025-03-11T21:57:23.657Z" },
-    { url = "https://files.pythonhosted.org/packages/36/9e/686eb5e6b8d251ae1659a9e1bca01271eaeef3309cc3c17f54f6254d87b7/mdanalysis-2.9.0-cp311-cp311-win_amd64.whl", hash = "sha256:ca3e1e1b26683e8f5efd96d9b3cb84da1ee463136017113ee860d651224e7afb", size = 6391158, upload-time = "2025-03-11T21:57:25.752Z" },
-    { url = "https://files.pythonhosted.org/packages/49/bd/6c15e33c08e8a15d9526d3662317bee73623340571cae32be3ee3c9bcc6b/mdanalysis-2.9.0-cp312-cp312-macosx_10_13_x86_64.whl", hash = "sha256:18f5207a7b0098e2837ddef8eb7cd2a8db70aa1e9f11e014189e5d923914ce21", size = 6581583, upload-time = "2025-03-11T21:57:27.47Z" },
-    { url = "https://files.pythonhosted.org/packages/38/a1/75f01707e41c30191908d134ea4917d3d6bdd3a525b59283e8970b57969a/mdanalysis-2.9.0-cp312-cp312-macosx_11_0_arm64.whl", hash = "sha256:8465e9a3b45ce6c188bdba472a27b80f1144b0c7127b8c4ed0156033bebfb5b6", size = 6471558, upload-time = "2025-03-11T21:57:29.45Z" },
-    { url = "https://files.pythonhosted.org/packages/a2/4f/31c87a03b0ae25fd9315704167d565a942cacca446fcbaf76a669c6e85d2/mdanalysis-2.9.0-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:486714919f08fe18f98bf80bec404dbc4face94803c1775d88340a148503683d", size = 12886888, upload-time = "2025-03-11T21:57:31.173Z" },
-    { url = "https://files.pythonhosted.org/packages/0b/a7/043d4f83baef204b943aa95c2f4defc3f70a86dd17969394b6702b3c361d/mdanalysis-2.9.0-cp312-cp312-win_amd64.whl", hash = "sha256:7a2ea6388a4af7af5734d5d248d2c127d1548f465efa2eff6aa5d9ab9b674112", size = 6394518, upload-time = "2025-03-11T21:57:33.431Z" },
-    { url = "https://files.pythonhosted.org/packages/b6/4c/a8ab61891fdd0fe49528e202d14ac6b3f4bb1adc11dff5f00b0509f4c38e/mdanalysis-2.9.0-cp313-cp313-macosx_10_13_x86_64.whl", hash = "sha256:164cf71ced0c202683c53a3c5eb66d5d88cb14cbe52f0c5eb3c80a5dbb79a4bd", size = 6567745, upload-time = "2025-03-11T21:57:35.477Z" },
-    { url = "https://files.pythonhosted.org/packages/f6/9c/7fe12c2da25071a61e05bc17615ea9d8bd2069ec6c5f5268899133c411f8/mdanalysis-2.9.0-cp313-cp313-macosx_11_0_arm64.whl", hash = "sha256:4d663627d104b6a57d618afac60a2e86fc7452080b921c8b1b399aa77ed16c63", size = 6459909, upload-time = "2025-03-11T21:57:37.176Z" },
-    { url = "https://files.pythonhosted.org/packages/f1/37/2860b0c101b6037023c0b6decb8893f382d765dbe969a139f933d6551eb3/mdanalysis-2.9.0-cp313-cp313-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:e4cfa6fb8e9911556461e6b31adc14fb8a2274ffe39c9171b9e5df52e08376c9", size = 12829282, upload-time = "2025-03-11T21:57:39.454Z" },
-    { url = "https://files.pythonhosted.org/packages/40/21/a968e3a3bd65d5b285c2c0ea2b8044f82c3e576bd4d28a2b7cb04b07abba/mdanalysis-2.9.0-cp313-cp313-win_amd64.whl", hash = "sha256:af06687aa5431d0495ffa2f5f86f9d9572d167daa2bb188396ef7a83ef7caad3", size = 6392427, upload-time = "2025-03-11T21:57:41.936Z" },
+    { url = "https://files.pythonhosted.org/packages/5c/a0/8552fdd48872f2dc6623f4e05e3cddf18511ad67d2a71ce8baa80832c316/mdanalysis-2.11.0-cp311-cp311-macosx_10_9_x86_64.whl", hash = "sha256:2fc833f81f2dc9ec6d817bf0f34a6510a41a784bb9eb69e1935ec26ad7591fdd", size = 6830820, upload-time = "2026-10-21T12:58:01.643Z" },
+    { url = "https://files.pythonhosted.org/packages/e4/7f/aeb040c1e6c91514a278ba083cafc8f9d0b05f80d2dcf85db7a8513f013f/mdanalysis-2.11.0-cp311-cp311-macosx_11_0_arm64.whl", hash = "sha256:47d1225a6ae8a98b126b9725420a7f5d75a9ab6c4f50a667bd9dbba64e8b6cbf", size = 6796707, upload-time = "2026-10-21T12:58:04.221Z" },
+    { url = "https://files.pythonhosted.org/packages/57/85/4f519486c29fd3258ab1929f3b7df0861b048ec8244714a795faf0b2da5c/mdanalysis-2.11.0-cp311-cp311-manylinux_2_24_aarch64.manylinux_2_28_aarch64.whl", hash = "sha256:b6c7820f2328662afa39ff29312a6707d74fdc866cb7fedeef8f2a95701d63a5", size = 13688783, upload-time = "2026-10-21T12:58:06.162Z" },
+    { url = "https://files.pythonhosted.org/packages/31/8d/892890d2d8564f1ab44c1c0417a480d7a151b2a7b42594b55bd9afa28a3f/mdanalysis-2.11.0-cp311-cp311-manylinux_2_24_x86_64.manylinux_2_28_x86_64.whl", hash = "sha256:64d53b7c99ed10d457f4a203007686f947c730548f65fb688f0d4f380802ab36", size = 13762400, upload-time = "2026-10-21T12:58:09.007Z" },
+    { url = "https://files.pythonhosted.org/packages/94/f5/8d2cc69357767dc9d48ad97b2f6549b51e97e3e8ab9294da358a93734cfc/mdanalysis-2.11.0-cp311-cp311-win_amd64.whl", hash = "sha256:7134b3613bb0a77f0436378e0f3029e1cff82f6f1e62e17012ae59dabdb4391b", size = 6861578, upload-time = "2026-10-21T12:58:11.667Z" },
+    { url = "https://files.pythonhosted.org/packages/aa/f3/f7eb17cf28fdc5b728f4d4d2db2d6911e7fd068435ce5d157374265ec6d0/mdanalysis-2.11.0-cp312-cp312-macosx_10_13_x86_64.whl", hash = "sha256:94ea811bf9b565729e1204b1dadee5499e1b2f6f9a0d4fa576bb8beb0dafc49e", size = 6856533, upload-time = "2026-10-21T12:58:14.01Z" },
+    { url = "https://files.pythonhosted.org/packages/d0/64/4e089828a2fb0970af9f3a93ff116289d57e3e1e71aceef15601165300a0/mdanalysis-2.11.0-cp312-cp312-macosx_11_0_arm64.whl", hash = "sha256:8e058ba0a92d6ebaa81b9df3392b0a304158eafa81b903c0028b53b9704d7132", size = 6808725, upload-time = "2026-10-21T12:58:15.943Z" },
+    { url = "https://files.pythonhosted.org/packages/a2/10/4f8b89b6c6ce1cabcb946b827d1679e29d0a7bdd1f9f574f9ae400ef98fb/mdanalysis-2.11.0-cp312-cp312-manylinux_2_24_aarch64.manylinux_2_28_aarch64.whl", hash = "sha256:d0504171e1176cece3c196ea53cfd416d8d6afd217144c23c26087f52307ef64", size = 13573010, upload-time = "2026-10-21T12:58:18.324Z" },
+    { url = "https://files.pythonhosted.org/packages/cf/e2/24df77f1f69ee42582b69296b669f829bdfa77a15b1a8adfa709fc7f335d/mdanalysis-2.11.0-cp312-cp312-manylinux_2_24_x86_64.manylinux_2_28_x86_64.whl", hash = "sha256:a5268a6e0215380406af3b579b0814d6cb265fab69819f57517e4ab9b49efdb4", size = 13752931, upload-time = "2026-10-21T12:58:21.344Z" },
+    { url = "https://files.pythonhosted.org/packages/27/b7/bd005748616d75372f3476baa68e7b66ca93b0c43f8b117c887f2fe7ed53/mdanalysis-2.11.0-cp312-cp312-win_amd64.whl", hash = "sha256:a18461727daf8d1815caedb862f388c288560fe4c9fecf8594b4632a3f3b8309", size = 6878561, upload-time = "2026-10-21T12:58:23.804Z" },
+    { url = "https://files.pythonhosted.org/packages/f1/d3/0424f5b08d4767df45bd6f2d9654e73ea0303919f3046dee797e0dd9f0dd/mdanalysis-2.11.0-cp313-cp313-macosx_10_13_x86_64.whl", hash = "sha256:28a1163f1b3a37a4a807bbe1557ca26800bab002fba151a60e48db20515b793d", size = 6858721, upload-time = "2026-10-21T12:58:26.423Z" },
+    { url = "https://files.pythonhosted.org/packages/39/78/43d928ba6a471c6677345fca27065edf91c721b7601a30b848b509ae2d12/mdanalysis-2.11.0-cp313-cp313-macosx_11_0_arm64.whl", hash = "sha256:137dc965e4a5d75b2c337d036c6ae41f15bb59aecc48fd39007e47b54195d3e8", size = 6808520, upload-time = "2026-10-21T12:58:28.994Z" },
+    { url = "https://files.pythonhosted.org/packages/13/98/03f3d802d2a77459da08a94ff4ee0ae26239c63abda6da87407050e4caf0/mdanalysis-2.11.0-cp313-cp313-manylinux_2_24_aarch64.manylinux_2_28_aarch64.whl", hash = "sha256:82a2f9bd5c2cfb1455f2ae9c7a44aadd65dfa297038029d1711eeb0e7fda630d", size = 13508969, upload-time = "2026-10-21T12:58:31.732Z" },
+    { url = "https://files.pythonhosted.org/packages/1b/a5/f2187427a6a6db35f40a1cb8d2b24ed761b3813875d2d6aa235e9efbec5a/mdanalysis-2.11.0-cp313-cp313-manylinux_2_24_x86_64.manylinux_2_28_x86_64.whl", hash = "sha256:b86e3f8831a8c6768d0eb5a44eb7680c1e781b1f65f4cab9f701cf7b7f0a3068", size = 13686023, upload-time = "2026-10-21T12:58:34.76Z" },
+    { url = "https://files.pythonhosted.org/packages/9c/ef/82d3147129e330c351147e8a810ad260054e0df5cc561482a46304df9dfb/mdanalysis-2.11.0-cp313-cp313-win_amd64.whl", hash = "sha256:8a40f2b146493fd5001d2d5f72e18dcda379afb8cd34f87460834e306ab64799", size = 6876117, upload-time = "2026-10-21T12:58:37.328Z" },
+    { url = "https://files.pythonhosted.org/packages/f9/f7/77dfbdccd25561e6a800ce86266a82af9bb6e4e408881b6600916ce8ccca/mdanalysis-2.11.0-cp314-cp314-macosx_10_15_x86_64.whl", hash = "sha256:7ae0438b14a461012fe777cc5383f4fe295b604bfbb94d27dbf1d91427aa81f8", size = 6861934, upload-time = "2026-10-21T12:58:39.71Z" },
+    { url = "https://files.pythonhosted.org/packages/4b/67/74c1e1a77de46adca85cb31f3f164cae136c2a6a95af8e5eeec541d2b9fc/mdanalysis-2.11.0-cp314-cp314-macosx_11_0_arm64.whl", hash = "sha256:229cc24ff47e608fc073213ac31f12408c0666711d02cd058de6a5b2937905df", size = 6817710, upload-time = "2026-10-21T12:58:41.909Z" },
+    { url = "https://files.pythonhosted.org/packages/55/0f/d6e90ab4b2c2e3e5af8e80aec509e180919c7831900ea57fae240a5240a7/mdanalysis-2.11.0-cp314-cp314-manylinux_2_24_aarch64.manylinux_2_28_aarch64.whl", hash = "sha256:3f90d06409522d1fab0aa85f964f85de86f3f1197e814dc64f4ef2cf4e1090da", size = 13468199, upload-time = "2026-10-21T12:58:44.549Z" },
+    { url = "https://files.pythonhosted.org/packages/e3/31/aed1d269138f29f85fc379b98e95c9a32526fa644ad5b3f7d3f104b2c1fb/mdanalysis-2.11.0-cp314-cp314-manylinux_2_24_x86_64.manylinux_2_28_x86_64.whl", hash = "sha256:b8090c3fb5f922aee7e1da6e5e75771e79b6444d1c81c07dfd006987ff6842f2", size = 13625298, upload-time = "2026-10-21T12:58:47.536Z" },
+    { url = "https://files.pythonhosted.org/packages/3d/49/8bb3139629a06025a7d9bc086388a7ea62bfbdeb21f8e1225599314ff823/mdanalysis-2.11.0-cp314-cp314-win_amd64.whl", hash = "sha256:2747aa1263d7b300d333845666b4bb96d12393e707d3d2b78cae74ac6645ac78", size = 6904855, upload-time = "2026-10-21T12:58:50.108Z" },
 ]
 
 [[package]]
 name = "mdanalysistests"
-version = "2.9.0"
+version = "2.11.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "hypothesis" },
     { name = "mdanalysis" },
     { name = "pytest" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/3d/09/83a486b6686e8d5a230586d8b419a17f2e65ad981305e90cf2093690bf24/mdanalysistests-2.9.0.tar.gz", hash = "sha256:8e4942ec3aaef5e93aeb39690293764ab9995550135ff1bd0df2f40cb95c0626", size = 57488757, upload-time = "2025-03-11T21:57:11.167Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/27/bb/f16a0690f7f0219eec3310deb3d47f09da6df58a50873f6624f4742ea6f0/mdanalysistests-2.11.0.tar.gz", hash = "sha256:5edeb5b01805da728b202103aa8d2b5974a37f1005ab1fe0150ed7d59702d2ea", size = 59555441, upload-time = "2026-10-21T12:55:53.042Z" }
 
 [[package]]
 name = "mdsasa-bolt"
@@ -417,7 +425,7 @@ dev = [
 requires-dist = [
     { name = "biopython", specifier = ">=1.85" },
     { name = "freesasa", specifier = ">=2.2.1" },
-    { name = "mdanalysis", specifier = ">=2.9.0" },
+    { name = "mdanalysis", specifier = ">=2.11.0" },
     { name = "numpy", specifier = ">=2.3.1" },
     { name = "pytest", specifier = ">=8.4.1" },
     { name = "rust-sasa-python", specifier = "==0.7.4" },

@@ -10,7 +10,7 @@ requires-python = ">=3.11"
 dependencies = [
     "biopython>=1.85",
     "freesasa>=2.2.1",
-    "mdanalysis>=2.9.0",
+    "mdanalysis>=2.11.0",
     "numpy>=2.3.1",
     "pytest>=8.4.1",
     "rust-sasa-python==0.7.4",
