@@ -53,6 +53,7 @@ jobs:
           RUSTUP_TOOLCHAIN: ${{ env.RUST_TOOLCHAIN }}
         run: |
           rustup toolchain install "$RUST_TOOLCHAIN" --profile minimal
+          sudo apt install -y libopenblas-dev
           uv run --no-sync maturin build --release --locked --out dist --interpreter .venv/bin/python
       - name: Download release wheels for testing
         if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags/v')
